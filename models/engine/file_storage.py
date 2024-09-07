@@ -51,7 +51,7 @@ class FileStorage():
             print(e)
 
     @classmethod
-    def load(cls):
+    def reload(cls):
         try:
             with open(cls.__file, 'r') as f:
                 temp = json.load(f)
@@ -91,11 +91,14 @@ class FileStorage():
         if classname == 'Item':
             try:
                 item = cls.__data['items'][id]
+                user_id = item.user_id
                 for comment in item.comments:
                     user_id = cls.__data['comments'][comment].user_id
                     cls.__data['users'][user_id].comments.remove(comment)
                     del cls.__data['comments'][comment]
-                del cls.__data['items'][item]
+                
+                del cls.__data['items'][id]
+                cls.__data['users'][user_id].items.remove(id)
             except Exception as e:
                 print(e)
 
