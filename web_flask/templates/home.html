@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>Moseeb</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>Home</H1>
+        <UL>
+        {% for item in items %}
+            <LI>{{ item.title }}: <B>{{ item.price }}</B>
+	    </LI>
+        {% endfor %}
+        </UL>
+    </BODY>
+</HTML>

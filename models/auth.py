@@ -19,11 +19,10 @@ class Auth():
     @classmethod
     def SignIn(cls, email, password):
         if email not in cls.__users:
-            print('this email doesn\'t exist')
-            return
+            return 'email'
         if bcrypt.checkpw(password.encode('utf-8'), cls.__users[email]['password'].encode('utf-8')):
             return cls.__users[email]['user_id']
-    
+        return 'password'
     @classmethod
     def save(cls, email, password, user_id):
         salt = bcrypt.gensalt()

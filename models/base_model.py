@@ -24,6 +24,7 @@ class BaseModel():
                 self.user_id = ''
                 self.title, self.details = '', ''
                 self.price = 0
+                self.category = ''
                 self.images, self.comments = [], []
                 self.location_lang, self.location_lat = 0.0, 0.0
             if self.__class__.__name__ == 'Comment':
