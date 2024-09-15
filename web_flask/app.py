@@ -118,6 +118,33 @@ def UpdateSubmit():
         user.phone = phone
         storage.save()
         return redirect(url_for('profile'))
+    
+
+@app.route('/profile/resetpassword')
+def ResetPassword():
+    user_id = session.get('user_id')
+    if user_id:
+        return render_template('resetpassword.html')
+    else:
+        return redirect(url_for('SignIn'))
+    
+
+@app.route('/profile/resetpassword/submit', methods=['POST'])
+def ResetPasswordSubmit():
+    old_pwd = request.form.get('old_pwd')
+    new_pwd = request.form.get('new_pwd')
+    user_id = session.get('user_id')
+    user = storage.all('User').get(user_id)
+    reset_msg = 'reset password done'
+    if Auth.ResetPassword(user_id, old_pwd, new_pwd):
+        return render_template('profile.html', user=user, reset_msg=reset_msg)
+    else:
+        error_pwd = 'the old password does not correct.'
+        return render_template('resetpassword.html', error_pwd=error_pwd)
+
+
+
+
 
 
 

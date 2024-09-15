@@ -33,6 +33,17 @@ class Auth():
         if bcrypt.checkpw(password.encode('utf-8'), cls.__users[email]['password'].encode('utf-8')):
             return cls.__users[email]['user_id']
         return 'password'
+    
+    @classmethod
+    def ResetPassword(cls, user_id, old_pwd, new_pwd):
+        from models import storage
+        email = storage.all('User').get(user_id).email
+
+        if bcrypt.checkpw(old_pwd.encode('utf-8'), cls.__users[email]['password'].encode('utf-8')):
+            cls.save(email, new_pwd, user_id)
+            return True
+        
+
     @classmethod
     def save(cls, email, password, user_id):
         salt = bcrypt.gensalt()
