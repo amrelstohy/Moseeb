@@ -2,6 +2,7 @@ import json
 import bcrypt
 from models.user import User
 
+
 class Auth():
     __file = 'users.json'
     __users = {}
@@ -10,11 +11,20 @@ class Auth():
         pass
 
     @classmethod
-    def SignUp(cls, email):
+    def SignUp(cls,fname, lname, email, phone, pwd, gender):
+        from models import storage
         if email in cls.__users:
             print('this email is used before')
             return
-        return True
+        user = User()
+        user.first_name = fname
+        user.last_name = lname
+        user.email = email
+        user.phone = phone
+        user.gender = gender
+        storage.save()
+        cls.save(email, pwd, user.id)
+        return user.id
 
     @classmethod
     def SignIn(cls, email, password):

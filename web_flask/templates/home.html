@@ -4,7 +4,9 @@
         <TITLE>Moseeb</TITLE>
     </HEAD>
     <BODY>
+        <H1>{{session.user_id}}</H1>
         <H1>Home</H1>
+        <H1>{{user}}</H1>
         <UL>
         {% for item in items %}
             <LI>{{ item.title }}: <B>{{ item.price }}</B>
