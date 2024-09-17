@@ -20,12 +20,14 @@ class BaseModel():
                 self.favourites, self.comments, self.items = [], [], []
                 self.birthday = ''
                 self.gender = ''
+                self.img = ''
             if self.__class__.__name__ == 'Item':
                 self.user_id = ''
                 self.title, self.details = '', ''
                 self.price = 0
                 self.category = ''
                 self.images, self.comments = [], []
+                self.category = ''
                 self.location_lang, self.location_lat = 0.0, 0.0
             if self.__class__.__name__ == 'Comment':
                 self.user_id, self.item_id = '', ''

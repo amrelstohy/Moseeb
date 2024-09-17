@@ -10,6 +10,12 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(16) 
 csrf = CSRFProtect(app)
 
+UPLOAD_FOLDER = 'static/uploads/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 @app.route('/')
 def home():
     user_id = session.get('user_id')
@@ -141,6 +147,23 @@ def ResetPasswordSubmit():
     else:
         error_pwd = 'the old password does not correct.'
         return render_template('resetpassword.html', error_pwd=error_pwd)
+    
+
+
+@app.route('/sell')
+def Sell():
+    user_id = session.get('user_id')
+
+    if user_id:
+        
+    else:
+        return redirect(url_for('SignIn'))
+    
+
+@app.route('/items')
+def Items():
+    category = request.args.get('category')
+    return 'hi'
 
 
 
