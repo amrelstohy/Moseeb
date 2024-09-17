@@ -155,9 +155,10 @@ def Sell():
     user_id = session.get('user_id')
 
     if user_id:
-        
+        pass
     else:
         return redirect(url_for('SignIn'))
+    
     
 
 @app.route('/items')
