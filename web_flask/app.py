@@ -247,24 +247,16 @@ def DeleteUser():
     return redirect(url_for('home'))
     
 
-
-
-
-
-    
-    
-
 @app.route('/items')
 def Items():
-    category = request.args.get('category', 'all')  # Default to 'all' if no category is provided
-    page = request.args.get('page', 1, type=int)  # Default to page 1
+    category = request.args.get('category', 'all') 
+    page = request.args.get('page', 1, type=int) 
     items_per_page = 2
     start = (page - 1) * items_per_page
     end = start + items_per_page
     
     all_items = list(storage.all('Item').values())
     
-    # Filter items by category
     if category == 'phones':
         filtered_items = [item for item in all_items if item.category == 'phones']
     elif category == 'watches':
@@ -274,11 +266,10 @@ def Items():
     elif category == 'all':
         filtered_items = all_items
     else:
-        abort(404)  # If an invalid category is given, return a 404 page
+        abort(404)
 
-    # Paginate items
     paginated_items = filtered_items[start:end]
-    has_next = len(filtered_items) > end  # Check if there's a next page
+    has_next = len(filtered_items) > end
 
     return render_template(
         'items.html', 
