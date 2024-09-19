@@ -5,6 +5,9 @@
     </HEAD>
     <BODY>
         <H1>{{session.user_id}}</H1>
+        {% if session.user_id %}
+        <h1>fffff</h1>
+        {% endif %}
         <H1>Home</H1>
         <H1>{{user}}</H1>
         <UL>

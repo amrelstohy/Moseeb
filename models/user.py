@@ -35,7 +35,7 @@ class User(BaseModel):
         except Exception as e:
             print("sjdhjhdvj")
 
-    def sell(self, title, price, details, images, location_lang=0.0, location_lat=0.0):
+    def sell(self, title, price, category, details, images='', location_lang=0.0, location_lat=0.0):
         from models.item import Item
         from models import storage
         try:
@@ -43,13 +43,14 @@ class User(BaseModel):
             item.user_id = self.id
             item.title = title
             item.price = price
+            item.category = category
             item.details = details
             item.images = images
             item.location_lang = location_lang
             item.location_lat = location_lat
             self.items.append(item.id)
-            storage.new(item)
             storage.save()
+            return item
         except Exception as e:
             print(e)
 
