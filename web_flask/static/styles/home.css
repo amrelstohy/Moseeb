@@ -3,17 +3,23 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+  main {
+    padding-bottom: 60px; 
+  }
   
   body {
     font-family: 'Arial', sans-serif;
     background-color:#fde1cb;
+    overflow-y: scroll
   }
   
   .navbar {
     width: 100%;
-    background-color: #f8f8f8;
+    background-color: #fff6f6;
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
+    position: relative;
   }
   
   .navbar-container {
@@ -162,4 +168,83 @@
   .sell-btn:hover {
     background-color: #6aa69c;
   }
+
+
+
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-top: 70px;
+    margin: 20px auto;
+    gap: 20px;
+  }
+  
+  .card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    text-align: center;
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  button {
+    background-color: #f0633e;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+
+
+
+
+
+  footer {
+    background-color:  #fff6f6;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .footer-left {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .footer-right {
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 40px;
+  }
+  
+  
+  .social-icons a {
+    margin-left: 10px;
+  }
+  
+  .social-icons img {
+    width: 24px;
+    height: 24px;
+  }
+  
   

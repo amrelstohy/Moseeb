@@ -1,3 +1,6 @@
+{% extends "main_layout.html" %}
+{% block title %}Moseeb{% endblock title %}
+{% block body %}
 <form action="/signin/submit" method="POST">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
 
@@ -11,3 +14,4 @@
 
     <input type="submit" value="Submit">
 </form>
+{% endblock body %}

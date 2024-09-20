@@ -1,58 +1,16 @@
-<!DOCTYPE html>
-<HTML lang="en">
-    <HEAD>
-        <TITLE>Moseeb</TITLE>
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}">
-    </HEAD>
-    <BODY>
-        <header>
-            <nav class="navbar">
-                <div class="navbar-container">
-                  <div class="navbar-left">
-                    <div class="logo">
-                      <img src="{{ url_for('static', filename='icons/cart.png') }}" alt="Description of image" style="width: 30px; height: 30px;">
-                      <h1>Moseeb</h1>
-                    </div>
-                    <ul class="nav-links">
-                      <li><a href="{{ url_for('Items', category='phones') }} ">Phones</a></li>
-                      <li><a href="{{ url_for('Items', category='watches') }} " >Watches</a></li>
-                      <li><a href="{{ url_for('Items', category='accessories') }} ">Accessories</a></li>
-                    </ul>
-                  </div>
-            
-                  <div class="navbar-right">
-                    <div class="select">
-                        <select>
-                          <option value="" selected disabled>Choose a location</option>
-                          <option value="1">Cairo</option>
-                          <option value="2">Mansoura</option>
-                          <option value="3">Alexandria</option>
-                        </select>
-                      </div>
-                    <div class="search-bar">
-                      <input type="text" placeholder="Enter product name">
-                      <button class="search-btn"><img src="{{ url_for('static', filename='icons/search.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></button>
-                    </div>
-                    <div class="user-actions">
-                      <i class="user-icon"><a href="%"><img src="{{ url_for('static', filename='icons/user.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></i>
-                      <i class="wishlist-icon"><a href="%"><img src="{{ url_for('static', filename='icons/star.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></i>
-                      <button class="sell-btn">Sell</button>
-                    </div>
-                  </div>
-                </div>
-              </nav>
-        </header>
-        <H1>{{session.user_id}}</H1>
-        {% if session.user_id %}
-        <h1>fffff</h1>
-        {% endif %}
-        <H1>Home</H1>
-        <H1>{{user}}</H1>
-        <UL>
-        {% for item in items %}
-            <LI>{{ item.title }}: <B>{{ item.price }}</B>
-	    </LI>
-        {% endfor %}
-        </UL>
-    </BODY>
-</HTML>
+{% extends "main_layout.html" %}
+{% block title %}Moseeb{% endblock title %}
+{% block body %}
+
+<div class="cards-container">
+    {% for item in items %}
+    <div class="card">
+        <h2>{{ item.title }}</h2>
+        <img src="{{item.image}}" alt="Card image">
+        <p>{{item.Description}}</p>
+        <button>Button 1</button>
+     </div>
+     {% endfor %}
+  </div>
+
+{% endblock body %}
