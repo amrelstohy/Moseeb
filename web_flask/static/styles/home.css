@@ -1,13 +1,165 @@
-nav{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color:#fde1cb;
+  }
+  
+  .navbar {
+    width: 100%;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .navbar-container {
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
+  }
+  
+  /* Left side (Logo & Links) */
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo  {
+    display: flex;
+    font-size: 24px;
+    color: #6aa69c;
+    font-weight: bold;
+    align-items: center;
+  }
+
+  .logo h1{
+    margin-left: 10px;
+  }
+
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin-left: 20px;
+  }
+  
+  .nav-links li {
+    margin-left: 15px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #6aa69c;
+    font-weight: bold;
+  }
+  
+  /* Right side (Location, Search, User) */
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+
+  select {
+    /* Reset Select */
+    appearance: none;
+    outline: 10px red;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1em;
+    color: black;
+    background-color: white;
+    background-image: none;
+    cursor: pointer;
+  }
+  /* Remove IE arrow */
+  select::-ms-expand {
+    display: none;
+  }
+  /* Custom Select wrapper */
+  .select {
+    position: relative;
+    display: flex;
+    width: 15em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+  }
+  /* Arrow */
+  .select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: #6aa69c;
+    transition: .25s all ease;
+    pointer-events: none;
+  }
+  /* Transition */
+  .select:hover::after {
+    color: #f39c12;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    height: 3em;
+    
+  }
+  
+  .search-bar input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    height: 100%;
+
+  }
+  
+  .search-btn {
+    padding: 8px;
+    background-color: #6aa69c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 100%;
+  }
+  
+  .user-actions {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+  }
+  
+  .user-icon,
+  .wishlist-icon {
+    font-size: 20px;
+    color: #6aa69c;
+    margin-right: 10px;
+  }
+  
+  .sell-btn {
+    background-color: #6aa69c;
+    color: white;
     padding: 10px 20px;
-    background-color: #333;
-}
-#nav{
-    display: inline-block;
-}
-
-#nav_list{
-
-}
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .sell-btn:hover {
+    background-color: #6aa69c;
+  }
+  

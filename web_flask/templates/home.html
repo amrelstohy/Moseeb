@@ -6,36 +6,42 @@
     </HEAD>
     <BODY>
         <header>
-            <nav>
-                <div id="nav">
-                <img src="{{ url_for('static', filename='icons/cart.png') }}" alt="Description of image" style="width: 20px; height: 20px;">
-                <span>Moseeb</span>
+            <nav class="navbar">
+                <div class="navbar-container">
+                  <div class="navbar-left">
+                    <div class="logo">
+                      <img src="{{ url_for('static', filename='icons/cart.png') }}" alt="Description of image" style="width: 30px; height: 30px;">
+                      <h1>Moseeb</h1>
+                    </div>
+                    <ul class="nav-links">
+                      <li><a href="{{ url_for('Items', category='phones') }} ">Phones</a></li>
+                      <li><a href="{{ url_for('Items', category='watches') }} " >Watches</a></li>
+                      <li><a href="{{ url_for('Items', category='accessories') }} ">Accessories</a></li>
+                    </ul>
+                  </div>
+            
+                  <div class="navbar-right">
+                    <div class="select">
+                        <select>
+                          <option value="" selected disabled>Choose a location</option>
+                          <option value="1">Cairo</option>
+                          <option value="2">Mansoura</option>
+                          <option value="3">Alexandria</option>
+                        </select>
+                      </div>
+                    <div class="search-bar">
+                      <input type="text" placeholder="Enter product name">
+                      <button class="search-btn"><img src="{{ url_for('static', filename='icons/search.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></button>
+                    </div>
+                    <div class="user-actions">
+                      <i class="user-icon"><a href="%"><img src="{{ url_for('static', filename='icons/user.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></i>
+                      <i class="wishlist-icon"><a href="%"><img src="{{ url_for('static', filename='icons/star.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></i>
+                      <button class="sell-btn">Sell</button>
+                    </div>
+                  </div>
                 </div>
-                <div id="nav">
-                <ul id="nav_list">
-                    <li><a href="#">Phones</a></li>
-                    <li><a href="#">Watches</a></li>
-                    <li><a href="#">Accessories</a></li>
-                </ul>
-                </div>
-                <div id="nav">
-                    <a href="#"><img src="{{ url_for('static', filename='icons/user.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a>
-                    <a href="#"><img src="{{ url_for('static', filename='icons/star.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a>
-                </div>
-            </nav>
-
+              </nav>
         </header>
-        <div class="search-bar">
-            <div class="location-dropdown">
-                <select>
-                    <option value="choose-location">Choose Location</option>
-                    <option value="location1">Location 1</option>
-                    <option value="location2">Location 2</option>
-                    </select>
-            </div>
-            <input type="text" placeholder="Enter product name">
-            <button>Search</button>
-        </div>
         <H1>{{session.user_id}}</H1>
         {% if session.user_id %}
         <h1>fffff</h1>
@@ -48,8 +54,5 @@
 	    </LI>
         {% endfor %}
         </UL>
-        <a href="{{ url_for('Items', category='phones') }} " >phones</a>
-        <a href="{{ url_for('Items', category='watches') }} " >watches</a>
-        <a href="{{ url_for('Items', category='accessories') }} " >accessories</a>
     </BODY>
 </HTML>
