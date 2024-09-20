@@ -1,0 +1,23 @@
+<form action="/sell/submit" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
+    <h1>{{error_msg}}</h1>
+
+    <label for="title">title:</label>
+    <input type="text" id="title" name="title" value="{{title}}" required>
+
+    <label for="category">Choose a car:</label>
+  <select name="category" id="category" required >
+    <option value="phones">phones</option>
+    <option value="watches">watches</option>
+    <option value="accessories">accessories</option>
+  </select>
+
+    <label for="price">price:</label>
+    <input type="number" id="price" name="price" value="{{price}}" required><br>
+
+    <label for="details">details:</label>
+    <input type="text" id="details" name="details" value="{{details}}" required><br>
+
+
+    <input type="submit" value="Submit">
+</form>

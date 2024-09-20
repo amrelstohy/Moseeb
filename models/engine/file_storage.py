@@ -66,7 +66,7 @@ class FileStorage():
         except Exception as e:
             print(e)
 
-    @classmethod
+    """@classmethod
     def delete(cls, id, classname):
         classes = ['User', 'Item', 'Comment']
         if classname not in classes:
@@ -110,7 +110,47 @@ class FileStorage():
                 cls.__data['items'][item_id].comments.remove(id)
                 del cls.__data['comments'][id]
             except Exception as e:
-                print(e)
+                print(e)"""
+
+
+    @classmethod
+    def delete(cls, id, classname):
+        classes = ['User', 'Item', 'Comment']
+        if classname not in classes:
+            return
+        
+        if classname == 'User':
+            user = cls.all('User').get(id)
+            if not user:
+                return
+            for comment_id in user.comments:
+                cls.all('Comment').pop(comment_id, None)
+
+            for item_id in user.items:
+                item = cls.all('Item').get(item_id)
+                if not item:
+                    continue
+                for comment_id in item.comments:
+                    cls.all('Comment').pop(comment_id, None)
+                cls.all('Item').pop(item_id, None)
+
+            cls.all('User').pop(id, None)
+
+        if classname == 'Item':
+            item = cls.all('Item').get(id)
+            if not item:
+                return
+            for comment_id in item.comments:
+                cls.all('Comment').pop(comment_id, None)
+            
+            cls.all('Item').pop(id, None)
+                
+        if classname == 'Comment':
+            comment = cls.all('Comment').get(id)
+            if not comment:
+                return
+            cls.all('Comment').pop(id, None)
+
 
 
 
