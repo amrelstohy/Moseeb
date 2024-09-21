@@ -1,4 +1,8 @@
-<form action="/items/{{ id }}/edit/submit" method="POST" enctype="multipart/form-data">
+
+{% extends "main_layout.html" %}
+{% block title %}Moseeb{% endblock title %}
+{% block body %}
+<form action="/items/{{ id }}/edit/submit" method="POST">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
     <h1>{{error_msg}}</h1>
 
@@ -24,3 +28,4 @@
 
     <input type="submit" value="Submit">
 </form>
+{% endblock body %}

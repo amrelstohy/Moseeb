@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-<HTML lang="en">
-    <HEAD>
-        <TITLE>Moseeb</TITLE>
-    </HEAD>
-    <BODY>
-        <H1>{{session.user_id}}</H1>
-        {% if session.user_id %}
-        <h1>fffff</h1>
-        {% endif %}
-        <H1>Home</H1>
-        <H1>{{user}}</H1>
-        <UL>
-        {% for item in items %}
-            <LI>{{ item.title }}: <B>{{ item.price }}</B>
-	    </LI>
-        {% endfor %}
-        </UL>
-        <a href="{{ url_for('Items', category='phones') }} " >phones</a>
-        <a href="{{ url_for('Items', category='watches') }} " >watches</a>
-        <a href="{{ url_for('Items', category='accessories') }} " >accessories</a>
-    </BODY>
-</HTML>
+{% extends "main_layout.html" %}
+{% block title %}Moseeb{% endblock title %}
+{% block body %}
+
+<div class="cards-container">
+    {% for item in items %}
+    <div class="card">
+        <h2>{{ item.title }}</h2>
+        <img src="{{item.image}}" alt="Card image">
+        <p>{{item.Description}}</p>
+        <button>Button 1</button>
+     </div>
+     {% endfor %}
+  </div>
+
+{% endblock body %}
