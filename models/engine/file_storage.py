@@ -3,6 +3,8 @@ from models.user import User
 from models.comment import Comment
 from models.item import Item
 import json
+import os
+import shutil
 
 class FileStorage():
     __data = {'users':{}, 'items':{}, 'comments':{}}
@@ -133,6 +135,10 @@ class FileStorage():
                 for comment_id in item.comments:
                     cls.all('Comment').pop(comment_id, None)
                 cls.all('Item').pop(item_id, None)
+            
+            path = f'web_flask/static/uploads/profile_images/{user.img}'
+            if os.path.exists(path):
+                os.remove(f'web_flask/static/uploads/profile_images/{user.img}')
 
             cls.all('User').pop(id, None)
 
@@ -142,6 +148,10 @@ class FileStorage():
                 return
             for comment_id in item.comments:
                 cls.all('Comment').pop(comment_id, None)
+
+            path = f'web_flask/static/uploads/items_images/{id}'
+            if os.path.exists(path):
+                shutil.rmtree(path)
             
             cls.all('Item').pop(id, None)
                 

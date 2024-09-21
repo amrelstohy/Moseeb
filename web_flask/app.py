@@ -4,16 +4,24 @@ from models import storage
 from flask_wtf import CSRFProtect
 import secrets
 from models.auth import Auth
+from werkzeug.utils import secure_filename
+import os
+import shutil
+
 
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16) 
 csrf = CSRFProtect(app)
 
-UPLOAD_FOLDER = 'static/uploads/'
+UPLOAD_FOLDER = 'web_flask/static/uploads/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 
@@ -48,24 +56,56 @@ def SignInSubmit():
         password_error = 'error password'
         return render_template('signin/form.html', email=email, password=password, password_error=password_error )
     else:
-        session['user_id'] = auth
+        session['user_id'] = auth.get('user_id')
+        session['superuser'] = auth.get('superuser')
+        next_url = request.args.get('next')
 
-    return redirect(url_for('home'))
+    return redirect(next_url or url_for('home'))
 
 @app.route('/logout')
 def logout():
-    del session['user_id']
+    session.pop('user_id', None)
+    session.pop('superuser', None)
     return redirect(url_for('home'))
 
 
 @app.route('/profile')
-def profile():
+def MyProfile():
     user = storage.all('User').get(session.get('user_id'))
     if user:
-        return render_template('profile.html', user=user)
+        items = []
+        for item_id in user.items:
+            item = storage.all('Item').get(item_id)
+            if item:
+                items.append(item)
+        return render_template('myprofile.html', user=user, items=items)
     else:
-        return redirect(url_for('SignIn'))
+        return redirect(url_for('SignIn', next=request.url))
     
+@app.route('/profile/<string:id>')
+def Profile(id):
+    user = storage.all('User').get(id)
+    if not user:
+        abort(404)
+    items = []
+    for item_id in user.items:
+        item = storage.all('Item').get(item_id)
+        if item:
+            items.append(item)
+    return render_template('profile.html', user=user, items=items)
+
+@app.route('/profile/<string:id>/delete')
+def DeleteUser(id):
+    superuser = session.get('superuser')
+    user = storage.all('User').get(id)
+    if not user:
+        abort(404)
+
+    if superuser:
+        storage.delete(id, 'User')
+        return redirect(url_for('home'))
+    else:
+        abort(404)
 
 @app.route('/signup')
 def SignUp():
@@ -84,17 +124,31 @@ def SignUpSubmit():
         error_msg = 'please complete all required fields'
         return render_template('signup/form.html', fname=fname, lname=lname,
                                email=email, phone=phone, error_msg=error_msg)
-    user_id = Auth.SignUp(fname, lname, email, phone, pwd, gender)
+    
+    user_id = Auth.SignUp(fname, lname, email, phone, pwd, False, gender)
     if not user_id:
         error_msg = 'this email exists before.'
         return render_template('signup/form.html', fname=fname, lname=lname,
-                               email=email, phone=phone, error_msg=error_msg)
+                            email=email, phone=phone, error_msg=error_msg)
+    
+    user = storage.all('User').get(user_id)
+
+    profile_image = request.files['profile_image']
+    if profile_image and allowed_file(profile_image.filename):
+        filename = secure_filename(profile_image.filename)
+        file_ext = os.path.splitext(filename)[1]
+        new_filename = f"{user_id}{file_ext}"
+        profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], 'profile_images/' + new_filename))
+        user.img = new_filename
+        storage.save()
+    else:
+        new_filename = None
+
     
     session['user_id'] = user_id
     return redirect(url_for('home'))
 
 
- 
 @app.route('/profile/update')
 def UpdateProfile():
     user_id = session.get('user_id')
@@ -106,26 +160,41 @@ def UpdateProfile():
         return render_template('update.html', fname=fname, lname=lname, phone=phone)
     else:
         return redirect(url_for('SignIn'))
-    
+
 @app.route('/profile/update/submit', methods=['POST'] )
 def UpdateSubmit():
+    user_id = session.get('user_id')
     fname = request.form.get('fname')
     lname = request.form.get('lname')
     phone = request.form.get('phone')
+    profile_image = request.files['profile_image']
+
+    if profile_image and allowed_file(profile_image.filename):
+        filename = secure_filename(profile_image.filename)
+        file_ext = os.path.splitext(filename)[1]
+        new_filename = f"{user_id}{file_ext}"
+        profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], 'profile_images/' + new_filename))
+    else:
+        new_filename = None
 
     if not (fname and lname and phone):
         error_msg = 'please complete all required fields'
         return render_template('update.html', fname=fname, lname=lname, phone=phone, error_msg=error_msg)
     else:
-        user_id = session.get('user_id')
+        
         user = storage.all('User').get(user_id)
+        """if user.img:
+            old_path = os.path.join(app.config['UPLOAD_FOLDER'],'profile_images/' + user.img)
+            if os.path.exists(old_path):
+                os.remove(old_path)"""
         user.first_name = fname
         user.last_name = lname
         user.phone = phone
+        if new_filename:
+            user.img = new_filename
         user.save()
-        return redirect(url_for('profile'))
+        return redirect(url_for('MyProfile'))
     
-
 @app.route('/profile/resetpassword')
 def ResetPassword():
     user_id = session.get('user_id')
@@ -149,7 +218,6 @@ def ResetPasswordSubmit():
         return render_template('resetpassword.html', error_pwd=error_pwd)
     
 
-
 @app.route('/sell')
 def Sell():
     user_id = session.get('user_id')
@@ -158,24 +226,40 @@ def Sell():
         return render_template('sell_form.html')
     else:
         return redirect(url_for('SignIn'))
-    
+
 @app.route('/sell/submit', methods=['POST'])
 def SellSubmit():
-    from models.user import User
     user_id = session.get('user_id')
     title = request.form.get('title')
     category = request.form.get('category')
     price = request.form.get('price')
     details = request.form.get('details')
 
-    if not (title and price and details):
+    if not (title and price and details) and 'images' not in request.files or not request.files.getlist('images'):
         error_msg = 'please complete all required fields'
         return render_template('sell_form.html', title=title, price=price, details=details, error_msg=error_msg)
     else:
         user = storage.all('User').get(user_id)
         item = user.sell(title, price, category, details)
+        images = request.files.getlist('images')
+        
+        path = app.config['UPLOAD_FOLDER'] + f'items_images/{item.id}/'
+        if not os.path.exists(path):
+            os.makedirs(path)
+        for image in images:
+            if image.filename == '':
+                continue
+
+            original_filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], f'items_images/{item.id}/' + original_filename))
+            item.images.append(original_filename)
+            storage.save()
+        
+
+        
+
         return redirect(url_for('Show', id=item.id))
-    
+
 @app.route('/items/<string:id>')
 def Show(id):
     item = storage.all('Item').get(id)
@@ -184,8 +268,64 @@ def Show(id):
     else:
         return abort(404)
     if item:
-        return render_template('show.html', item=item, user=user)
+        comments = []
+        users = []
+        for comment_id in item.comments:
+            comment = storage.all('Comment').get(comment_id)
+            user = storage.all('User').get(comment.user_id)
+            if comment and user:
+                comments.append(comment)
+                users.append(user)
+        return render_template('show.html', item=item, user=user, comments=comments, users=users)
+ 
+@app.route('/items/<string:id>/comment')
+def Comment(id):
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('SignIn', next=request.url))
+    comment = request.form.get('comment')
+    user = storage.all('User').get(user_id)
+    user.comment(id, comment)
+    return redirect(url_for('Show', id=id))
+
+@app.route('/items/<string:item_id>/deletecomment')
+def DeleteComment(item_id):
+    comment_id = request.args.get('comment_id')
+    item = storage.all('Item').get(item_id)
+    if comment_id not in item.comments:
+        return redirect(url_for('Show', id=item_id))
     
+    user = session.get('user_id')
+    superuser = session.get('superuser')
+    if not user:
+        return redirect(url_for('SignIn', next=request.url))
+    
+    if (user == item.user_id) or superuser:
+        storage.delete(comment_id, 'Comment')
+        return redirect(url_for('Show', id=item_id))
+    
+    abort(404)
+
+
+@app.route('/items/<string:id>/favourite')
+def Favourite(id):
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('SignIn', next=request.url))
+    user = storage.all('User').get(user_id)
+    user.favourite(id)
+    return redirect(url_for('Show', id=id))
+
+@app.route('/items/<string:id>/unfavourite')
+def UnFavourite(id):
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('SignIn', next=request.url))
+    user = storage.all('User').get(user_id)
+    user.unfavourite(id)
+    return redirect(url_for('Show', id=id))
+
+
 @app.route('/items/<string:id>/edit')
 def EditItem(id):
     user_id = session.get('user_id')
@@ -206,12 +346,31 @@ def EditItemSubmit(id):
     category = request.form.get('category')
     price = request.form.get('price')
     details = request.form.get('details')
+    item = storage.all('Item').get(id)
 
     if not (title and price and details):
         error_msg = 'please complete all required fields'
         return render_template('sell_edit_form.html', id=id, title=title, price=price, details=details, error_msg=error_msg)
     else:
-        item = storage.all('Item').get(id)
+        
+        if 'images' in request.files or  request.files.getlist('images'):
+            images = request.files.getlist('images')
+        
+            path = app.config['UPLOAD_FOLDER'] + f'items_images/{id}/'
+            if os.path.exists(path):
+                shutil.rmtree(path)
+                os.makedirs(path)
+                item.images = []
+            else:
+                os.makedirs(path)
+                item.images = []
+            for image in images:
+                if image.filename == '':
+                    continue
+                original_filename = secure_filename(image.filename)
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], f'items_images/{item.id}/' + original_filename))
+                item.images.append(original_filename)
+
         item.title = title
         item.category = category
         item.price = price
@@ -224,20 +383,21 @@ def EditItemSubmit(id):
 @app.route('/items/<string:id>/delete')
 def DeleteItem(id):
     user_id = session.get('user_id')
+    superuser = session.get('superuser')
     if not user_id:
         abort(404)
     
     item = storage.all('Item').get(id)
     item_user_id = item.user_id
 
-    if user_id == item_user_id:
+    if (user_id == item_user_id) or superuser:
         storage.delete(id, 'Item')
         return redirect(url_for('home'))
     else:
         abort(404)
 
 @app.route('/profile/delete')
-def DeleteUser():
+def DeleteProfile():
     user_id = session.get('user_id')
     if not user_id:
         abort(404)
@@ -279,12 +439,6 @@ def Items():
         has_next=has_next
     )
 
-
-
-
-
-
-    
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

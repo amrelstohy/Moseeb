@@ -1,2 +1,8 @@
 <h1>{{user}}</h1>
 <h2>{{item}}</h2>
+
+<h3>{{comments}}</h3>
+
+{% for img in item.images %}
+    <img src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + img) }}" alt="Item Image" width="200">
+{% endfor %}

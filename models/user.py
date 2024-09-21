@@ -17,7 +17,18 @@ class User(BaseModel):
         super().__init__(**kwargs)
 
     def favourite(self, item_id):
+        from models import storage
+        if item_id in self.favourites:
+            return
         self.favourites.append(item_id)
+        storage.save()
+
+    def unfavourite(self, item_id):
+        from models import storage
+        if item_id in self.favourites:
+            self.favourites.remove(item_id)
+            storage.save()
+        
 
     def comment(self, item_id, text):
         from models.comment import Comment
@@ -29,13 +40,12 @@ class User(BaseModel):
             comment.text = text
             self.comments.append(comment.id)
             storage.all('Item')[item_id].comments.append(comment.id)
-            storage.new(comment)
             storage.save()
             return True
         except Exception as e:
             print("sjdhjhdvj")
 
-    def sell(self, title, price, category, details, images='', location_lang=0.0, location_lat=0.0):
+    def sell(self, title, price, category, details, location_lang=0.0, location_lat=0.0):
         from models.item import Item
         from models import storage
         try:
@@ -45,9 +55,9 @@ class User(BaseModel):
             item.price = price
             item.category = category
             item.details = details
-            item.images = images
             item.location_lang = location_lang
             item.location_lat = location_lat
+            item.images = []
             self.items.append(item.id)
             storage.save()
             return item

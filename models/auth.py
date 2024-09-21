@@ -11,7 +11,7 @@ class Auth():
         pass
 
     @classmethod
-    def SignUp(cls,fname, lname, email, phone, pwd, gender):
+    def SignUp(cls,fname, lname, email, phone, pwd, superuser=False, gender=None, img=None):
         from models import storage
         if email in cls.__users:
             print('this email is used before')
@@ -22,8 +22,9 @@ class Auth():
         user.email = email
         user.phone = phone
         user.gender = gender
+        user.img = img
         storage.save()
-        cls.save(email, pwd, user.id)
+        cls.save(email, pwd, user.id, superuser)
         return user.id
 
     @classmethod
@@ -31,7 +32,7 @@ class Auth():
         if email not in cls.__users:
             return 'email'
         if bcrypt.checkpw(password.encode('utf-8'), cls.__users[email]['password'].encode('utf-8')):
-            return cls.__users[email]['user_id']
+            return {'user_id':cls.__users[email]['user_id'], 'superuser':cls.__users[email].get('superuser')}
         return 'password'
     
     @classmethod
@@ -45,9 +46,9 @@ class Auth():
         
 
     @classmethod
-    def save(cls, email, password, user_id):
+    def save(cls, email, password, user_id, suberuser=False):
         salt = bcrypt.gensalt()
-        cls.__users[email] = {'password':bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8'), 'user_id':user_id}
+        cls.__users[email] = {'password':bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8'), 'user_id':user_id, 'superuser':suberuser}
         try:
             with open(cls.__file, 'w') as file:
                 json.dump(cls.__users, file)
