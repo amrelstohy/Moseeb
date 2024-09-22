@@ -15,7 +15,7 @@ app.secret_key = secrets.token_hex(16)
 csrf = CSRFProtect(app)
 
 UPLOAD_FOLDER = 'web_flask/static/uploads/'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'jfif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -139,11 +139,12 @@ def SignUpSubmit():
         file_ext = os.path.splitext(filename)[1]
         new_filename = f"{user_id}{file_ext}"
         profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], 'profile_images/' + new_filename))
-        user.img = new_filename
-        storage.save()
-    else:
-        new_filename = None
 
+    else:
+        new_filename = ''
+
+    user.img = new_filename
+    storage.save()
     
     session['user_id'] = user_id
     return redirect(url_for('home'))
@@ -254,10 +255,6 @@ def SellSubmit():
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], f'items_images/{item.id}/' + original_filename))
             item.images.append(original_filename)
             storage.save()
-        
-
-        
-
         return redirect(url_for('Show', id=item.id))
 
 @app.route('/items/<string:id>')

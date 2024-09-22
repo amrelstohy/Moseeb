@@ -11,7 +11,7 @@ class Auth():
         pass
 
     @classmethod
-    def SignUp(cls,fname, lname, email, phone, pwd, superuser=False, gender=None, img=None):
+    def SignUp(cls,fname, lname, email, phone, pwd, superuser=False, gender=None):
         from models import storage
         if email in cls.__users:
             print('this email is used before')
@@ -22,7 +22,6 @@ class Auth():
         user.email = email
         user.phone = phone
         user.gender = gender
-        user.img = img
         storage.save()
         cls.save(email, pwd, user.id, superuser)
         return user.id
