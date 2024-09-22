@@ -38,7 +38,6 @@
   }
   
   .logo  {
-    display: flex;
     font-size: 24px;
     color: #6aa69c;
     font-weight: bold;
@@ -49,6 +48,10 @@
     margin-left: 10px;
   }
 
+  .logo a{
+    color: #6aa69c;
+    text-decoration: none;
+  }
   
   .nav-links {
     display: flex;
@@ -169,54 +172,98 @@
     background-color: #6aa69c;
   }
 
-
-
   .cards-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding-top: 70px;
-    margin: 20px auto;
+    justify-content: space-around;
     gap: 20px;
-  }
-  
-  .card {
-    background-color: white;
     padding: 20px;
-    border-radius: 8px;
+  }
+
+  .wrapper {
+    background-color: #f9f9f9;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 30%;
-    text-align: center;
-  }
-  
-  .card img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-  }
-  
-  button {
-    background-color: #f0633e;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    max-width: 300px;
+    margin: 20px;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
   }
-  
 
+  .wrapper:hover {
+    transform: scale(1.05);
+  }
 
+  .product-img {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .product-info {
+    padding: 20px;
+  }
+
+  .product-text h1 {
+    font-size: 1.5em;
+    margin: 0;
+    color: #333;
+  }
+
+  .product-text h1{}
+
+  .product-text h2 {
+    font-size: 1em;
+    color: #777;
+    margin-bottom: 10px;
+  }
+
+  .product-text p {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .product-price-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  .product-price-btn p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .product-price-btn button {
+    padding: 10px 20px;
+    background-color: #ff6200;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .product-price-btn button:hover {
+    background-color: #ff8b38;
+  }
 
   footer {
     background-color:  #fff6f6;
     padding: 20px;
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;
   }
-  
+
   .footer-container {
     display: flex;
     justify-content: space-between;

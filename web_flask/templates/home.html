@@ -4,13 +4,23 @@
 
 <div class="cards-container">
     {% for item in items %}
-    <div class="card">
-        <h2>{{ item.title }}</h2>
-        <img src="{{item.image}}" alt="Card image">
-        <p>{{item.Description}}</p>
-        <button>Button 1</button>
-     </div>
-     {% endfor %}
-  </div>
+    <div class="wrapper" onclick="clicked('{{ item.id }}')">
+        <div class="product-img" style="background-image: url('{{ url_for('static', filename='uploads/items_images/' ~ item.id ~ '/' ~ item.images[1]) }}');"></div>
+        <div class="product-info">
+            <div class="product-text">
+                <h1>{{ item.title }}</h1>
+                <span>{{ item.price }}</span>
+                <p>{{ item.details }}</p>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function clicked(itemId) {
+            window.location.href = "{{url_for('Show', id='')}}" + itemId;
+        }
+    </script>
+    {% endfor %}
+</div>
 
 {% endblock body %}
