@@ -15,7 +15,7 @@ app.secret_key = secrets.token_hex(16)
 csrf = CSRFProtect(app)
 
 UPLOAD_FOLDER = 'web_flask/static/uploads/'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'jfif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'jfif', 'heif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -53,7 +53,7 @@ def SignInSubmit():
         email_error = 'This Email does not exist.'
         return render_template('signin/form.html', email=email, password=password, email_error=email_error )
     elif auth == 'password':
-        password_error = 'error password'
+        password_error = 'Wrong password'
         return render_template('signin/form.html', email=email, password=password, password_error=password_error )
     else:
         session['user_id'] = auth.get('user_id')

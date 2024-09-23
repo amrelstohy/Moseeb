@@ -1,17 +1,153 @@
 {% extends "main_layout.html" %}
 {% block title %}Moseeb{% endblock title %}
 {% block body %}
-<form action="/signin/submit" method="POST">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
+<div class="wrapper_signin">
+    <div class="title"><span>Login Form</span></div>
+    <form action="/signin/submit" method="POST" >
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
+      <div class="row">
+        <i class="fas fa-user"><img src="{{ url_for('static', filename='icons/mail.png') }}" style="height: 20px; width: 20px;"></i>
+        <input type="email" id="email" name="email" value="{{email}}" placeholder="Email" required />
+      </div>
+      <div class="row">
+        <i class="fas fa-lock"><img src="{{ url_for('static', filename='icons/key.png') }}" style="height: 20px; width: 20px;"></i>
+        <input type="password" id="password" name="password" value="{{password}}" placeholder="Password" required />
+      </div>
+      <div class="pass"><a href="#">Forgot password?</a></div>
+      <div class="row button">
+        <input type="submit" value="Login" />
+      </div>
+      <div class="signup-link">Not a member? <a href="{{ url_for('SignUp') }}">Signup now</a></div>
+    </form>
+  </div>
+{% if email_error or password_error %}
+  <div class="wrapper_signin" style="  padding: 25px;">
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{email}}"><br>
-    <small>{{email_error}}</small><br>
+    <span style="color: red;">&#9888 {{email_error}} {{password_error}}</span>
+  </div>
+{%endif%}
+  <style>
 
-    <label for="name">Password:</label>
-    <input type="password" id="password" name="password" value="{{password}}"><br>
-    <small>{{password_error}}</small><br>
+    /* Importing Google Fonts - Poppins */
 
-    <input type="submit" value="Submit">
-</form>
+.container{
+ 
+  justify-content: center; 
+  align-items: center;
+}
+
+
+.wrapper_signin {
+  margin: 10px auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  max-width: 500px;
+  width: 100%;
+
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper_signin .title {
+  height: 120px;
+  background: #6aa69c;
+  border-radius: 5px 5px 0 0;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper_signin form {
+  padding: 25px 35px;
+}
+
+.wrapper_signin form .row {
+  height: 60px;
+  margin-top: 15px;
+  position: relative;
+}
+
+.wrapper_signin form .row input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding-left: 70px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+form .row input:focus {
+  border-color: #6aa69c;
+}
+
+form .row input::placeholder {
+  color: #999;
+}
+
+.wrapper_signin form .row i {
+  position: absolute;
+  width: 55px;
+  height: 100%;
+  color: #fff;
+  font-size: 22px;
+  background: #6aa69c;
+  border: 1px solid #6aa69c;
+  border-radius: 5px 0 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper_signin form .pass {
+  margin-top: 12px;
+}
+
+.wrapper_signin form .pass a {
+  color: #6aa69c;
+  font-size: 17px;
+  text-decoration: none;
+}
+
+.wrapper_signin form .pass a:hover {
+  text-decoration: underline;
+}
+
+.wrapper_signin form .button input {
+  margin-top: 20px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  padding-left: 0px;
+  background: #6aa69c;
+  border: 1px solid #16a085;
+  cursor: pointer;
+}
+
+form .button input:hover {
+  background: #6aa69c;
+}
+
+.wrapper_signin form .signup-link {
+  text-align: center;
+  margin-top: 45px;
+  font-size: 17px;
+}
+
+.wrapper_signin form .signup-link a {
+  color: #6aa69c;
+  text-decoration: none;
+}
+
+form .signup-link a:hover {
+  text-decoration: underline;
+}
+  </style>
 {% endblock body %}
+
+

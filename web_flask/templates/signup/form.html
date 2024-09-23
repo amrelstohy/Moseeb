@@ -2,42 +2,305 @@
 {% block title %}Moseeb{% endblock title %}
 {% block body %}
 
+{% if error_msg %}
+<div class="wrapper_signup">
+<span style="color: red;">&#9888  {{ error_msg }}</span>
+</div>
+{% endif %}
 
-<form action="/signup/submit" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
-    <h1>{{error_msg}}</h1>
+<div class="wrapper_signup">
+    <h2>Registration</h2>
+    <form action="/signup/submit" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
 
-    <label for="fname">First name:</label>
-    <input type="text" id="fname" name="fname" value="{{fname}}" required>
+      <div class="input-box">
+        <input type="text" id="fname" name="fname" value="{{fname}}" placeholder="Enter your first name" required>
+      </div>
 
-    <label for="lname">Last name:</label>
-    <input type="text" id="lname" name="lname" value="{{lname}}" required><br>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{email}}" required><br>
-
-    <label for="phone">Phone:</label>
-    <input type="tel" id="phone" name="phone" value="{{phone}}" required><br>
-
-    <label for="pwd">Password:</label>
-    <input type="password" id="pwd" name="pwd" required><br>
-
-    <label for="cpwd">Confirm Password</label>
-    <input type="password" id="cpwd" name="cpwd" required><br>
+   
+      <div class="input-box">
+        <input type="text" id="lname" name="lname" value="{{lname}}" placeholder="Enter your last name" required>
+      </div>
 
 
-    <label for="gender">gender</label><br>
-    <input type="radio" id="male" name="gender" value="male">
-    <label for="male">Male</label><br>
-    <input type="radio" id="female" name="gender" value="female">
-    <label for="female">Female</label><br>
-    <input type="radio" id="none" name="gender" value="none", checked="checked">
-    <label for="none">prefer not to say</label><br>
-    <!-- Profile Image Upload -->
-    <label for="profile_image">Upload Profile Image:</label>
-    <input type="file" id="profile_image" name="profile_image"><br>
+      <div class="input-box">
+        <input type="email" id="email" name="email" value="{{email}}" placeholder="Enter your email" required>
+      </div>
 
 
-    <input type="submit" value="Submit">
-</form>
+      <div class="input-box">
+        <input type="tel" id="phone" name="phone" value="{{phone}}" placeholder="Enter your phone number" required>
+      </div>
+
+ 
+      <div class="input-box">
+        <input type="password" id="pwd" name="pwd"  placeholder="Create password" required>
+        
+      </div>
+      <small id="passwordError" class="error"></small>
+     
+      <div class="input-box">
+        <input type="password" id="cpwd" placeholder="Confirm password" required>
+      </div>
+      <small id="confirmPasswordError" class="error"></small>
+
+
+ 
+ <div class="input-box">
+    <label for="profile_image">Upload Profile Image:</label><br>
+    <label for="file-upload" class="custom-file-upload">
+      Choose Image
+    </label>
+    <input type="file" id="file-upload" name="profile_image" accept=".png, .jpg, .jpeg, .jfif .heif" hidden>
+
+  </div>
+  <img id="imagePreview" class="image-preview" src="" alt="Profile Image Preview">
+      <div class="input-box button">
+        <input type="submit" value="Register Now" disabled id="submitBtn">
+      </div>
+
+      <div class="text">
+        <h3>Already have an account? <a href="{{ url_for('SignIn') }}">Login now</a></h3>
+      </div>
+    </form>
+  </div>
+
+
+  <script>
+    const passwordField = document.getElementById('pwd');
+    const confirmPasswordField = document.getElementById('cpwd');
+    const passwordErrorElement = document.getElementById('passwordError');
+    const confirmPasswordErrorElement = document.getElementById('confirmPasswordError');
+    const fileInput = document.getElementById('file-upload');
+    const fileNameElement = document.getElementById('fileName');
+    const imagePreview = document.getElementById('imagePreview');
+    const submitButton = document.getElementById('submitBtn');
+
+    
+    function validatePassword(password) {
+      const minLength = 8;
+      const regex = {
+        uppercase: /[A-Z]/,
+        lowercase: /[a-z]/,
+        number: /\d/,
+        specialChar: /[\W_]/
+      };
+
+      let errors = [];
+      
+      if (password.length < minLength) {
+        errors.push(`Password must be at least ${minLength} characters long.`);
+      }
+      if (!regex.uppercase.test(password)) {
+        errors.push("Password must contain at least one uppercase letter.");
+      }
+      if (!regex.lowercase.test(password)) {
+        errors.push("Password must contain at least one lowercase letter.");
+      }
+      if (!regex.number.test(password)) {
+        errors.push("Password must contain at least one number.");
+      }
+      if (!regex.specialChar.test(password)) {
+        errors.push("Password must contain at least one special character.");
+      }
+
+      return errors;
+    }
+
+    
+    function checkPasswordMatch() {
+      const password = passwordField.value;
+      const confirmPassword = confirmPasswordField.value;
+
+      
+      passwordErrorElement.innerHTML = '';
+      confirmPasswordErrorElement.innerHTML = '';
+
+      
+      let passwordErrors = validatePassword(password);
+      if (passwordErrors.length > 0) {
+        passwordErrorElement.innerHTML = passwordErrors.join('<br>');
+        return false;
+      } else {
+        passwordErrorElement.innerHTML = '<span class="valid">Password is valid.</span>';
+      }
+
+      
+      if (password !== confirmPassword) {
+        confirmPasswordErrorElement.innerHTML = "Passwords do not match.";
+        return false;
+      } else {
+        confirmPasswordErrorElement.innerHTML = '<span class="valid">Passwords match.</span>';
+      }
+
+      return true;
+    }
+
+    
+    fileInput.addEventListener('change', function () {
+      const file = fileInput.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block'; 
+        };
+
+        reader.readAsDataURL(file); 
+        fileNameElement.innerHTML = file.name; 
+      } else {
+        imagePreview.style.display = 'none'; 
+        fileNameElement.innerHTML = 'No file chosen';
+      }
+    });
+
+    
+    passwordField.addEventListener('input', checkPasswordMatch);
+    confirmPasswordField.addEventListener('input', checkPasswordMatch);
+
+ 
+    document.querySelectorAll('#pwd, #cpwd, #file-upload').forEach(input => {
+      input.addEventListener('input', () => {
+        submitButton.disabled = !checkPasswordMatch();
+      });
+    });
+  </script>
+
+      <style>
+
+
+.container{
+
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.wrapper_signup{
+  margin:  auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  position: relative;
+  max-width: 430px;
+  width: 100%;
+  background: #fff6f6;
+  padding: 34px;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+.wrapper_signup h2{
+  position: relative;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+.wrapper_signup h2::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 28px;
+  border-radius: 12px;
+  background: #6aa69c;
+}
+.wrapper_signup form{
+  margin-top: 30px;
+}
+.wrapper_signup form .input-box{
+  height: 52px;
+  margin: 18px 0;
+}
+form .input-box input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+  border: 1.5px solid #C7BEBE;
+  border-bottom-width: 2.5px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.input-box input:focus,
+.input-box input:valid{
+  border-color: #6aa69c;
+}
+form .policy{
+  display: flex;
+  align-items: center;
+}
+form h3{
+  color: #707070;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+.input-box.button input{
+  color: #fff;
+  letter-spacing: 1px;
+  border: none;
+  background: #6aa69c;
+  cursor: pointer;
+}
+.input-box.button input:hover{
+  background: #6aa69c;
+}
+form .text h3{
+ color: #333;
+ width: 100%;
+ text-align: center;
+}
+form .text h3 a{
+  color:#6aa69c;
+  text-decoration: none;
+}
+form .text h3 a:hover{
+  text-decoration: underline;
+}
+
+
+.error { color: red; }
+        .valid { color: green; }
+        small { display: block; margin-left: 10px;}
+
+        .custom-file-upload {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: #6aa69c;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .custom-file-upload:hover {
+      background-color: #16a085;
+    }
+
+    .file-name {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Image preview styles */
+    .image-preview {
+      display: none; /* Hide by default */
+      margin-top: 10px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #6aa69c;
+    }
+
+
+      </style>
 {% endblock body %}
