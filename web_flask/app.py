@@ -7,6 +7,7 @@ from models.auth import Auth
 from werkzeug.utils import secure_filename
 import os
 import shutil
+import re
 
 
 
@@ -361,11 +362,12 @@ def EditItemSubmit(id):
             else:
                 os.makedirs(path)
                 item.images = []
-            for image in images:
-                if image.filename == '':
+            for idx in range(len(images)):
+                if images[idx].filename == '':
                     continue
-                original_filename = secure_filename(image.filename)
-                image.save(os.path.join(app.config['UPLOAD_FOLDER'], f'items_images/{item.id}/' + original_filename))
+                original_filename = secure_filename(images[idx].filename)
+                extension = re.search(r'\.([a-zA-Z0-9]+)$', original_filename)
+                images[idx].save(os.path.join(app.config['UPLOAD_FOLDER'], f'items_images/{item.id}/[{idx}]' + extension ))
                 item.images.append(original_filename)
 
         item.title = title

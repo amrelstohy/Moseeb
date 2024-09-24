@@ -1,9 +1,667 @@
+{% extends "main_layout.html" %}
+{% block title %}Moseeb{% endblock title %}
+{% block body %}
+
 <h1>{{user}}</h1>
 <h2>{{item}}</h2>
 
 <h3>{{comments}}</h3>
 <h3>{{users}}</h3>
 
-{% for img in item.images %}
-    <img src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + img) }}" alt="Item Image" width="200">
-{% endfor %}
+<section class="hero">
+    <div class="overlay"></div>
+
+    <div class="container_1">
+        <div class="floating-img">
+          <ion-icon class="close-icon" name="close-outline"></ion-icon>
+
+          <button class="btn-swipe btn-swipe-left">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </button>
+          <div class="left-imgs">
+            <img
+              class="main-img-float"
+              alt="product image"
+              src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}"
+            />
+            <button class="btn-swipe btn-swipe-right">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </button>
+            <div class="thumbnails-float">
+              <div class="thumb-img-float active-thumb">
+                <img
+                  alt="image-thumbnails"
+                  src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}"
+                />
+              </div>
+              <div class="thumb-img-float">
+                <img
+                  alt="image-thumbnails"
+                  src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[1]) }}"
+                />
+              </div>
+              <div class="thumb-img-float">
+                <img
+                  alt="image-thumbnails"
+                  src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[2]) }}"
+                />
+              </div>
+              <div class="thumb-img-float">
+                <img
+                  alt="image-thumbnails"
+                  src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[3]) }}"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="left-imgs">
+          <img
+            class="main-img"
+            alt="product image"
+            src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}"
+          />
+          <div class="thumbnails">
+            <div class="thumb-img active-thumb">
+              <img
+                alt="image-thumbnails"
+                src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}"
+              />
+            </div>
+            <div class="thumb-img">
+              <img
+                alt="image-thumbnails"
+                src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[1]) }}"
+              />
+            </div>
+            <div class="thumb-img">
+              <img
+                alt="image-thumbnails"
+                src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[2]) }}"
+              />
+            </div>
+            <div class="thumb-img">
+              <img
+                alt="image-thumbnails"
+                src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[3]) }}"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="right-text">
+          <span class="heading-secondary">{{item.category}}</span>
+          <h1 class="heading-primary">{{item.title}}</h1>
+          <p class="description">{{item.details}}
+          </p>
+
+          <h2 class="price-discount">${{item.price}}</h2>
+
+          <p class="price-original">$250.00</p>
+          <div class="buttons">
+            <div class="btn-left">
+              <button class="minus">
+                <svg
+                  width="12"
+                  height="4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <defs>
+                    <path
+                      d="M11.357 3.332A.641.641 0 0 0 12 2.69V.643A.641.641 0 0 0 11.357 0H.643A.641.641 0 0 0 0 .643v2.046c0 .357.287.643.643.643h10.714Z"
+                      id="a"
+                    />
+                  </defs>
+                  <use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#a" />
+                </svg>
+              </button>
+              <span class="cart-number">0</span>
+              <button class="plus">
+                <svg
+                  width="12"
+                  height="12"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <defs>
+                    <path
+                      d="M12 7.023V4.977a.641.641 0 0 0-.643-.643h-3.69V.643A.641.641 0 0 0 7.022 0H4.977a.641.641 0 0 0-.643.643v3.69H.643A.641.641 0 0 0 0 4.978v2.046c0 .356.287.643.643.643h3.69v3.691c0 .356.288.643.644.643h2.046a.641.641 0 0 0 .643-.643v-3.69h3.691A.641.641 0 0 0 12 7.022Z"
+                      id="b"
+                    />
+                  </defs>
+                  <use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#b" />
+                </svg>
+              </button>
+            </div>
+            <div class="btn-right">
+              <ion-icon name="cart-outline"></ion-icon>
+              <button class="add-cart">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+</section>
+
+
+<div class="row d-flex justify-content-center mt-100 mb-100">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body text-center">
+                <h4 class="card-title">Latest Comments</h4>
+            </div>
+            <div class="comment-widgets">
+                <!-- Comment Row -->
+                <div class="d-flex flex-row comment-row m-t-0">
+                    <div class="p-2"><img src="https://i.imgur.com/Ur43esv.jpg" alt="user" width="50" class="rounded-circle"></div>
+                    <div class="comment-text w-100">
+                        <h6 class="font-medium">James Thomas</h6> <span class="m-b-15 d-block">This is awesome website. I would love to comeback again. </span>
+                        <div class="comment-footer"> <span class="text-muted float-right">April 14, 2019</span> <button type="button" class="btn btn-cyan btn-sm">Edit</button> <button type="button" class="btn btn-success btn-sm">Publish</button> <button type="button" class="btn btn-danger btn-sm">Delete</button> </div>
+                    </div>
+                </div> <!-- Comment Row -->
+                <div class="d-flex flex-row comment-row">
+                    <div class="p-2"><img src="https://i.imgur.com/8RKXAIV.jpg" alt="user" width="50" class="rounded-circle"></div>
+                    <div class="comment-text active w-100">
+                        <h6 class="font-medium">Michael Hussey</h6> <span class="m-b-15 d-block">Thanks bbbootstrap.com for providing such useful snippets. </span>
+                        <div class="comment-footer"> <span class="text-muted float-right">May 10, 2019</span> <button type="button" class="btn btn-cyan btn-sm">Edit</button> <button type="button" class="btn btn-success btn-sm">Publish</button> <button type="button" class="btn btn-danger btn-sm">Delete</button> </div>
+                    </div>
+                </div> <!-- Comment Row -->
+                <div class="d-flex flex-row comment-row">
+                    <div class="p-2"><img src="https://i.imgur.com/J6l19aF.jpg" alt="user" width="50" class="rounded-circle"></div>
+                    <div class="comment-text w-100">
+                        <h6 class="font-medium">Johnathan Doeting</h6> <span class="m-b-15 d-block">Great industry leaders are not the real heroes of stock market. </span>
+                        <div class="comment-footer"> <span class="text-muted float-right">August 1, 2019</span> <button type="button" class="btn btn-cyan btn-sm">Edit</button> <button type="button" class="btn btn-success btn-sm">Publish</button> <button type="button" class="btn btn-danger btn-sm">Delete</button> </div>
+                    </div>
+                </div>
+            </div> <!-- Card -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Main image
+const sectionHero = document.querySelector(".hero");
+const mainImg = document.querySelector(".main-img");
+// Float image
+const classFloat = document.querySelector(".floating-img");
+const mainImgFloat = document.querySelector(".main-img-float");
+// thumbnail images
+const thumbnailbImg = document.querySelectorAll(".thumb-img");
+// thumbnail imgs floating
+const thumbnailbImgFloat = document.querySelectorAll(".thumb-img-float");
+
+const overlayC = document.querySelector(".overlay");
+const closeIcon = document.querySelector(".close-icon");
+
+// btns
+const leftArrow = document.querySelector(".btn-swipe-left");
+const rightArrow = document.querySelector(".btn-swipe-right");
+
+const minusBtn = document.querySelector(".minus");
+const cartNumber = document.querySelector(".cart-number");
+const plusBtn = document.querySelector(".plus");
+// console.log(btnLeft);
+// console.log(btnRight);
+
+//////////////////////////////////////
+// Adding and removing float image
+let index = 0;
+
+mainImg.addEventListener("click", function () {
+  classFloat.classList.add("activate"); ////////
+  overlayC.classList.add("activate");
+
+  mainImgFloat.src = mainImg.src;
+  for (let j = 0; j < thumbnailbImgFloat.length; j++) {
+    thumbnailbImgFloat[j].classList.remove("active-thumb");
+    if (thumbnailbImg[j].classList.contains("active-thumb")) {
+      thumbnailbImgFloat[j].classList.add("active-thumb");
+      index = j;
+    }
+  }
+});
+
+const removeFloatImg = function () {
+  classFloat.classList.remove("activate"); //////
+  overlayC.classList.remove("activate");
+};
+
+closeIcon.addEventListener("click", function () {
+  removeFloatImg();
+});
+
+overlayC.addEventListener("click", function () {
+  removeFloatImg();
+});
+
+document.addEventListener("keydown", function (e) {
+  // console.log(e.key);
+  if (e.key === "Escape") {
+    removeFloatImg();
+  }
+});
+
+//////////////////////////////////
+// changing images main
+
+for (let i = 0; i < thumbnailbImg.length; i++) {
+  thumbnailbImg[i].addEventListener("click", function () {
+    for (let j = 0; j < thumbnailbImg.length; j++) {
+      thumbnailbImg[j].classList.remove("active-thumb");
+    }
+    thumbnailbImg[i].classList.add("active-thumb");
+
+    // to change main image
+    const thumbnailTag = thumbnailbImg[i].getElementsByTagName("img");
+    // console.log(thumbnailTag[0], thumbnailTag[0].getAttribute("src"));
+    const thumbnailIndex = thumbnailTag[0].getAttribute("src")[84];
+    console.log(thumbnailTag[0].getAttribute("src")[6]);
+
+    mainImg.src = `{% raw %}{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[${thumbnailIndex}]) }}{% endraw %}`;
+  });
+}
+
+////////////////////////////////
+// changing images Floating
+// console.log(thumbnailbImgFloat);
+for (let i = 0; i < thumbnailbImgFloat.length; i++) {
+  thumbnailbImgFloat[i].addEventListener("click", function () {
+    for (let j = 0; j < thumbnailbImgFloat.length; j++) {
+      thumbnailbImgFloat[j].classList.remove("active-thumb");
+    }
+    thumbnailbImgFloat[i].classList.add("active-thumb");
+    index = i;
+
+    const thumbnailFloatTag = thumbnailbImgFloat[i].getElementsByTagName("img");
+
+    const thumbnailbFloatIndex = thumbnailFloatTag[0].getAttribute("src")[84];
+
+    mainImgFloat.src = `{% raw %}{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[${thumbnailIndex}]) }}{% endraw %}`;
+    // mainImgFloat.src = `images/image-product-${1}.jpg`;
+  });
+}
+
+// for clicking buttons
+leftArrow.addEventListener("click", function () {
+  if (index >= 1) {
+    for (const key of thumbnailbImgFloat) {
+      key.classList.remove("active-thumb");
+    }
+    index -= 1;
+    mainImgFloat.src = `{% raw %}{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[${index + 1}]) }}{% endraw %}`;
+    thumbnailbImgFloat[index].classList.add("active-thumb");
+  }
+});
+
+rightArrow.addEventListener("click", function () {
+  if (index <= 2) {
+    for (const key of thumbnailbImgFloat) {
+      key.classList.remove("active-thumb");
+    }
+    index += 1;
+    mainImgFloat.src = `{% raw %}{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[${index + 1}]) }}{% endraw %}`;
+    thumbnailbImgFloat[index].classList.add("active-thumb");
+  }
+});
+
+</script>
+
+
+<style>
+    @import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+    .hero {
+  width: 100vw;
+  min-width: 100%;
+  height: 100vh;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container_1 {
+  /* background-color: red; */
+  width: 90rem;
+  margin: auto auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 8rem;
+  place-items: center;
+}
+
+.heading-secondary {
+  display: block;
+  color: hsl(26, 100%, 55%);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
+}
+
+.heading-primary {
+  color: hsl(220, 13%, 13%);
+  font-size: 3.5rem;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  margin-bottom: 3rem;
+}
+
+.description {
+  color: hsl(219, 9%, 45%);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.price-discount {
+  /* color: red; */
+  font-size: 2.3rem;
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.price-discount::after {
+  position: absolute;
+  display: inline-block;
+  content: "50%";
+  top: 6px;
+  left: 9.9rem;
+
+  font-size: 1rem;
+  font-weight: 700;
+  color: hsl(26, 100%, 55%);
+  background-color: #ffe5d1;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.price-original {
+  color: hsl(220, 14%, 75%);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: line-through;
+  margin-bottom: 3rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 2rem;
+}
+
+.btn-left {
+  background-color: hsl(223, 64%, 98%);
+  display: flex;
+  align-items: center;
+  gap: 2.8rem;
+  padding: 1rem 1rem;
+  border-radius: 8px;
+}
+
+.plus,
+.minus {
+  background: none;
+  border: none;
+  height: 1.8rem;
+  width: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-number {
+  width: 10px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.cart-icon {
+  height: 1rem;
+}
+
+.btn-right {
+  background-color: hsl(26, 100%, 55%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsl(223, 64%, 98%);
+
+  padding: 1rem 5rem;
+  border-radius: 8px;
+  gap: 1rem;
+  box-shadow: 0 2.4rem 3.6rem rgba(255, 125, 26, 0.2);
+  transition: all 0.3s;
+}
+
+.plus:hover,
+.minus:hover,
+.plus:active,
+.minus:active {
+  opacity: 0.5;
+}
+
+.btn-right:hover,
+.btn-right:active {
+  background-color: #ffa45f;
+}
+
+.add-cart {
+  background: none;
+  border: none;
+  color: inherit;
+
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.plus,
+.minus,
+.btn-right,
+.add-cart {
+  cursor: pointer;
+}
+
+.main-img {
+  height: 80%;
+  width: 85%;
+  border-radius: 10px;
+  cursor: pointer;
+
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.thumbnails {
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.thumb-img {
+  height: auto;
+  width: 6rem;
+  cursor: pointer;
+}
+
+.thumb-img img {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.thumb-img img:hover {
+  opacity: 0.6;
+}
+
+.thumb-img.active-thumb img {
+  opacity: 0.3;
+}
+
+.thumb-img.active-thumb {
+  border: 2px solid hsl(26, 100%, 55%);
+  border-radius: 7px;
+}
+
+/* ///////////////// */
+/* Floating image */
+
+.overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  min-height: 100%;
+  width: 100vw;
+  min-width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 5;
+}
+
+.overlay.activate {
+  display: block;
+}
+
+.floating-img {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  width: 50rem;
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
+}
+
+.floating-img.activate {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  top: 51%;
+}
+
+/* ////////////////// */
+/* FLOATING section */
+
+.main-img-float {
+  height: auto;
+  width: 80%;
+  border-radius: 10px;
+  /* cursor: pointer; */
+
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.thumbnails-float {
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.thumb-img-float {
+  height: auto;
+  width: 6rem;
+  cursor: pointer;
+}
+
+.thumb-img-float img {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.thumb-img-float img:hover {
+  opacity: 0.6;
+}
+
+.thumb-img-float.active-thumb img {
+  opacity: 0.6;
+  /* background-image: linear-gradient(white, white); */
+}
+
+.thumb-img-float.active-thumb {
+  border: 2px solid hsl(26, 100%, 55%);
+  border-radius: 7px;
+}
+
+/* /////////////////// */
+/* BUTTONS */
+
+.btn-swipe {
+  position: absolute;
+  height: 4rem;
+  width: 4rem;
+  /* top: 0;
+  left: 0; */
+  background-color: hsl(0, 0%, 100%);
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.btn-swipe ion-icon {
+  height: 50%;
+  width: 50%;
+}
+
+.btn-swipe.btn-swipe-left {
+  top: 40%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+
+.btn-swipe.btn-swipe-right {
+  top: 40%;
+  right: 10%;
+  transform: translate(50%, -50%);
+}
+
+.btn-swipe:hover,
+.btn-swipe:active {
+  color: hsl(26, 100%, 55%);
+}
+
+.close-icon {
+  color: hsl(0, 0%, 100%);
+  height: 3.3rem;
+  width: 3.3rem;
+  cursor: pointer;
+
+  position: absolute;
+  top: -8%;
+  right: 8%;
+}
+
+.close-icon:hover,
+.close-icon:active {
+  color: hsl(26, 100%, 55%);
+}
+
+.mt-100{margin-top: 100px}.mb-100{margin-bottom:100px}
+.card{position: relative;display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-orient: vertical;-webkit-box-direction: normal;-ms-flex-direction: column;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #fff;background-clip: border-box;border: 0px solid transparent;border-radius: 0px}
+.card-body{-webkit-box-flex: 1;-ms-flex: 1 1 auto;flex: 1 1 auto;padding: 1.25rem}
+.card .card-title{position: relative;font-weight: 600;margin-bottom: 10px}
+.comment-widgets{position: relative;margin-bottom: 10px}
+.comment-widgets .comment-row{border-bottom: 1px solid transparent;padding: 14px;display: -webkit-box;display: -ms-flexbox;display: flex;margin: 10px 0}
+.p-2{padding: 0.5rem !important}
+.comment-text{padding-left: 15px}
+.w-100{width: 100% !important}
+.m-b-15{margin-bottom: 15px}
+.btn-sm{padding: 0.25rem 0.5rem;font-size: 0.76563rem;line-height: 1.5;border-radius: 1px}
+.btn-cyan{color: #fff;background-color: #27a9e3;border-color: #27a9e3}
+.btn-cyan:hover{color: #fff;background-color: #1a93ca;border-color: #198bbe}
+.comment-widgets .comment-row:hover{background: rgba(0, 0, 0, 0.05)}
+</style>
+
+{% endblock body %}
