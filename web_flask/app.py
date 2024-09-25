@@ -436,6 +436,10 @@ def Items():
         has_next=has_next
     )
 
+@app.route('/landingpage')
+def LandingPage():
+    return render_template('landing_page.html')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

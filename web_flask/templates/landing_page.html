@@ -1,0 +1,42 @@
+{% extends "main_layout.html" %}
+
+{% block title %}
+Welcome to Moseeb
+{% endblock title %}
+
+{% block body %}
+<main>
+    <section class="hero" style="background-image: url('{{ url_for('static', filename='images/2.jpg') }}'); background-size: cover; background-position: center; height: 600px; position: relative; margin: 40px; border-radius: 30px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); overflow: hidden;">
+        <div class="hero-content" style="position: absolute; top: 50%; left: 25%; transform: translate(-50%, -50%); color: black; ">
+          <h1>Welcome to <span style="color: #6aa69c;">Moseeb</span>?</h1>
+          <p>Your one-stop solution for phones, watches, and accessories.</p>
+          <button class="sell-btn" onclick="window.location.href='{{ url_for('Sell') }}'">Start Selling</button>
+        </div>
+      </section>
+
+      <section class="about-us" style="background-color: #fff6f6; padding: 40px; text-align: center;  margin: 40px; border-radius: 30px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); overflow: hidden;">
+        <h2>Why <span style="color: #6aa69c;">Moseeb</span>? <br></h2>
+        <div class="about-us-content" style="display: flex; justify-content: space-around; align-items: flex-start; gap: 20px; padding-top: 20px;">
+            <div style="flex: 1; border-right: 2px solid #6fa49e; ">
+                <h3>Wide Selection</h3>
+                <p>We offer a variety of tech gadgets, from phones to accessories, all in one place.</p>
+            </div>
+            <div style="flex: 1;">
+                <h3>Affordable Prices</h3>
+                <p>At Moseeb, you get high-quality products without breaking the bank.</p>
+            </div>
+            <div style="flex: 1; border-left: 2px solid #6fa49e; ">
+                <h3>Easy Selling</h3>
+                <p>Start selling your gadgets easily with our user-friendly platform.</p>
+            </div>
+        </div>
+    </section>
+    
+
+  <section class="cta" style=" background-color: #fff6f6; padding: 40px; text-align: center;  margin: 40px; border-radius: 30px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); overflow: hidden;">
+    <h2>Get Started Now <br><br></h2>
+    <p>Browse through our categories, find what you need, or start selling your products today! <br><br></p>
+    <a href="{{ url_for('Sell') }}"><button class="sell-btn">Sell Your Product</button></a>
+  </section>
+</main>
+{% endblock body %}
