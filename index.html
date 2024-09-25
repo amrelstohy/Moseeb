@@ -1,0 +1,66 @@
+{% extends "main_layout.html" %}
+
+{% block title %}
+Welcome to Moseeb
+{% endblock title %}
+
+{% block body %}
+<main>
+    <section class="hero" style="background-image: url('{{ url_for('static', filename='images/2.jpg') }}'); background-size: cover; background-position: center; height: 600px; position: relative; margin: 40px; border-radius: 30px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); overflow: hidden;">
+        <div class="hero-content" style="margin-left: 8%; position: absolute; top: 50%; left: 25%; transform: translate(-50%, -50%); color: black; ">
+          <h1 style="font-size: 48px;">Welcome to <span style="color: #6aa69c;">Moseeb</span></h1>
+          <p style="font-size: 20px;">Discover the easiest way to buy, sell, and trade phones, accessories, and smartwatches. <br/> Your next tech upgrade is just a click away. <br> <br></p>
+          <button class="sell-btn" style="font-size: 20px;" onclick="window.location.href='{{ url_for('home') }}'">Make a Deal</button>
+        </div>
+      </section>
+
+      <section class="about-us" style="background-color: #fff6f6; padding: 40px; text-align: center;  margin: 40px; border-radius: 30px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); overflow: hidden;">
+        <h1 style="font-size: 48px; margin-bottom: 20px;">Why <span style="color: #6aa69c;">Moseeb</span>? <br></h1>
+        <div class="about-us-content" style="display: flex; justify-content: space-around; align-items: flex-start; gap: 20px; padding-top: 30px; margin-top: 20px;">
+            <div style="flex: 1; border-right: 2px solid #6fa49e; ">
+                <h2 style="margin-bottom: 10px;">Wide Selection</h2>
+                <p>We offer a variety of tech gadgets, from phones to accessories, all in one place.</p>
+            </div>
+            <div style="flex: 1;">
+                <h2 style="margin-bottom: 10px;">Affordable Prices</h2>
+                <p>At Moseeb, you get suitable products without breaking the bank.</p>
+            </div>
+            <div style="flex: 1; border-left: 2px solid #6fa49e; ">
+                <h2 style="margin-bottom: 10px;">Easy Selling</h2>
+                <p>Start selling your gadgets easily with our user-friendly platform.</p>
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="cta" style="background-color: #fff6f6; padding: 40px; margin: 40px; border-radius: 30px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); overflow: hidden; display: flex; align-items: center;">
+      <!-- Left side with the heading -->
+      <div style="flex: 0.2; text-align: left; border-right: 2px solid #6fa49e; margin-right: 25px;">
+          <h1 style="font-size: 48px; margin-bottom: 15px;">About <br> <span style="color: #6aa69c;">Moseeb</span></h1>
+      </div>
+  
+      <!-- Right side with the paragraph and button -->
+      <div style="flex: 1; text-align: left;">
+          <p>The idea for <span style="color: #6aa69c;"><b>Moseeb</b></span> stemmed from our vision for simplifying the trading experience in the tech world. With the rapid pace of tech advancements, users deserve a seamless experience that allows them to stay current with the latest devices without hassle. 
+          <br>Check Moseeb on GitHub:<br><br></p>
+          <a href="{{ url_for('Sell') }}"><button class="sell-btn" style="display: block; margin: 0 auto;">GitHub</button></a>
+      </div>
+  </section>
+
+  <section class="about-us" style="background-color: #fff6f6; padding: 40px; text-align: center;  margin: 40px; border-radius: 30px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); overflow: hidden;">
+    <h1 style="font-size: 48px; margin-bottom: 20px;">The Team Beyond <span style="color: #6aa69c;">Moseeb</span><br></h1>
+    <div class="about-us-content" style="display: flex; justify-content: space-around; align-items: flex-start; gap: 20px; padding-top: 30px; margin-top: 20px;">
+        <div style="flex: 1; border-right: 2px solid #6fa49e; ">
+            <h2 style="margin-bottom: 10px;">Wide Selection</h2>
+            <p>We offer a variety of tech gadgets, from phones to accessories, all in one place.</p>
+        </div>
+        <div style="flex: 1;">
+            <h2 style="margin-bottom: 10px;">Affordable Prices</h2>
+            <p>At Moseeb, you get suitable products without breaking the bank.</p>
+        </div>
+
+    </div>
+</section>
+  
+</main>
+{% endblock body %}
