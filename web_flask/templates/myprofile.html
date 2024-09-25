@@ -1,4 +1,11 @@
+{% extends "main_layout.html" %}
+{% block title %}Moseeb{% endblock title %}
+{% block body %}
+
 <h1>{{reset_msg}}</h1>
 <h1>{{user}}</h1>
 <h2>{{items}}</h2>
 <img src="{{ url_for('static', filename='uploads/profile_images/' + user.img) }}" alt="Profile Image">
+
+
+{% endblock body %}
