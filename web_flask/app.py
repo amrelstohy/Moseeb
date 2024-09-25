@@ -283,10 +283,11 @@ def Show(id):
         users = []
         for comment_id in item.comments:
             comment = storage.all('Comment').get(comment_id)
-            user = storage.all('User').get(comment.user_id)
-            if comment and user:
-                comments.append(comment)
-                users.append(user)
+            if comment:
+                user = storage.all('User').get(comment.user_id)
+                if comment and user:
+                    comments.append(comment)
+                    users.append(user)
         return render_template('show.html', item=item, users=users, comments=comments, item_user=item_user)
  
 @app.route('/items/<string:id>/comment', methods=['POST'])
@@ -302,16 +303,18 @@ def Comment(id):
 @app.route('/items/<string:item_id>/deletecomment')
 def DeleteComment(item_id):
     comment_id = request.args.get('comment_id')
+    comment = storage.all('Comment').get(comment_id)
     item = storage.all('Item').get(item_id)
     if comment_id not in item.comments:
         return redirect(url_for('Show', id=item_id))
     
     user = session.get('user_id')
+    print(user)
     superuser = session.get('superuser')
     if not user:
         return redirect(url_for('SignIn', next=request.url))
     
-    if (user == item.user_id) or superuser:
+    if (user == comment.user_id) or superuser:
         storage.delete(comment_id, 'Comment')
         return redirect(url_for('Show', id=item_id))
     
