@@ -21,7 +21,7 @@
               </div>
         
               <div class="navbar-right">
-                <div class="select">
+                <!-- <div class="select">
                     <select>
                       <option value="" selected disabled>Choose a location</option>
                       <option value="1">Cairo</option>
@@ -34,7 +34,7 @@
                   <button class="search-btn"><img src="{{ url_for('static', filename='icons/search.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></button>
                 </div>
                 <div class="user-actions">
-  
+   -->
                   <!-- HTML !-->
                   {% if session.loged_user%}
                   <a href="{{ url_for('MyProfile', id=session.loged_user.id)}}"><img class="image-preview-profile" src="{{ url_for('static', filename='uploads/profile_images/' + session.loged_user.img ) }}" ></a>

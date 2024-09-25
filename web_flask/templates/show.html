@@ -11,170 +11,171 @@
 <h3>{{session.loged_user}}</h3> -->
 <!-- <h3>{{comments[0]}}</h3> -->
 <div class="profile-container">
-<section class="hero">
-    <div class="overlay"></div>
+    <section class="hero">
+        <div class="overlay"></div> <!-- Overlay div opening and closing -->
 
-    <div class="container_1">
-        <div class="floating-img">
-          <ion-icon class="close-icon" name="close-outline"></ion-icon>
+        <div class="container_1">
+            <div class="floating-img"> <!-- Floating image container -->
+                <ion-icon class="close-icon" name="close-outline"></ion-icon>
 
-          <button class="btn-swipe btn-swipe-left">
-            <ion-icon name="chevron-back-outline" style="font-size: 40px;">&#8678</ion-icon>
-          </button>
-          <div class="left-imgs">
-            <img
-              class="main-img-float"
-              alt="product image"
-              src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}"
-            />
-            <button class="btn-swipe btn-swipe-right">
-              <ion-icon name="chevron-forward-outline" style="font-size: 40px;">&#8680</ion-icon>
-            </button>
-            <div class="thumbnails-float">
-              <div class="thumb-img-float active-thumb">
-                <img
-                  alt="image-thumbnails"
-                  src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}"
-                />
-              </div>
-              {% for img in item.images%}           
-              {%if img != item.images[0]%}   
-              <div class="thumb-img-float">
-                <img
-                  alt="image-thumbnails"
-                  src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + img) }}"
-                />
-              </div>
-              {%endif%}
-              {%endfor%}
-              </div>
-          </div>
-        </div>
-        <div class="left-imgs">
-          <img
-            class="main-img"
-            alt="product image"
-            src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}"
-          />
-          <div class="thumbnails">
-            <div class="thumb-img active-thumb">
-              <img
-                alt="image-thumbnails"
-                src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}"
-              />
+                <button class="btn-swipe btn-swipe-left">
+                    <ion-icon name="chevron-back-outline" style="font-size: 40px;">&#8678</ion-icon>
+                </button>
+
+                <div class="left-imgs"> <!-- Main floating image -->
+                    <img class="main-img-float" alt="product image"
+                        src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}" />
+                </div>
+
+                <button class="btn-swipe btn-swipe-right">
+                    <ion-icon name="chevron-forward-outline" style="font-size: 40px;">&#8680</ion-icon>
+                </button>
+
+                <div class="thumbnails-float"> <!-- Thumbnails floating div -->
+                    <div class="thumb-img-float active-thumb">
+                        <img alt="image-thumbnails" 
+                             src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}" />
+                    </div>
+
+                    {% for img in item.images %}           
+                    {% if img != item.images[0] %}   
+                    <div class="thumb-img-float">
+                        <img alt="image-thumbnails"
+                             src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + img) }}" />
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div> <!-- Closing thumbnails-float -->
+            </div> <!-- Closing floating-img -->
+
+            <div class="left-imgs"> <!-- Second image section -->
+                <img class="main-img" alt="product image"
+                    src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}" />
+
+                <div class="thumbnails"> <!-- Static thumbnail section -->
+                    <div class="thumb-img active-thumb">
+                        <img alt="image-thumbnails"
+                            src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + item.images[0]) }}" />
+                    </div>
+
+                    {% for img in item.images %}           
+                    {% if img != item.images[0] %}   
+                    <div class="thumb-img">
+                        <img alt="image-thumbnails"
+                             src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + img) }}" />
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div> <!-- Closing thumbnails -->
+            </div> <!-- Closing left-imgs -->
+
+            <div class="right-text"> <!-- Right section text -->
+                <span class="heading-secondary">{{ item.category }}</span>
+                <h1 class="heading-primary">{{ item.title }}</h1>
+
+                <!-- User section -->
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img class="image-preview" src="{{ url_for('static', filename='uploads/profile_images/' + item_user.img ) }}" >
+                    <a href="{{ url_for('Profile', id=item.user_id) }}" style="color: black;">
+                        <h2 style="display: inline-block; margin-top: 7px;">{{ item_user.first_name }}<br>{{ item_user.last_name }}</h2>
+                    </a>
+                </div>
+
+                <h2 style="margin-top: 20px;">Price</h2>
+                <h2 class="price-discount">&#163;{{ item.price }}</h2><br>
+
+                <h2 style="margin-top: 20px;">Details</h2>
+                <p class="description">{{ item.details }}</p><br>
+
+                <h2>Contacts</h2>
+                <p>{{ item_user.phone }}</p>
+
+                {% if session.loged_user.id == item.user_id %}
+                <button class="button-28" role="button" id="edit-button">Edit</button>
+                <script>
+                    document.getElementById("edit-button").addEventListener("click", function() {
+                        window.location.href = "{{ url_for('EditItem', id=item.id) }}";
+                    });
+                </script>
+                {% endif %}
+            </div> <!-- Closing right-text -->
+        </div> <!-- Closing container_1 -->
+    </section>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"></link>
+
+    <section class="comments-section"> <!-- Comments section -->
+        <div class="container">
+            <div class="comments-header">
+                <h2>Comments</h2>
             </div>
-              {% for img in item.images%}           
-              {%if img != item.images[0]%}   
-              <div class="thumb-img">
-                <img
-                  alt="image-thumbnails"
-                  src="{{ url_for('static', filename='uploads/items_images/' + item.id + '/' + img) }}"
-                />
-              </div>
-              {%endif%}
-              {%endfor%}
-        </div>
-        </div>
-        <div class="right-text">
-          <span class="heading-secondary">{{item.category}}</span>
-          <h1 class="heading-primary">{{item.title}}</h1>
 
-
-          <!--user-->
-          <div style="display: flex; align-items: center; gap: 10px;">
-          <img class="image-preview" src="{{ url_for('static', filename='uploads/profile_images/' + item_user.img ) }}" >
-          <a href="{{ url_for('Profile', id=item.user_id)}}" style="color: black;"><h2 style="display: inline-block; margin-top: 7px;">{{item_user.first_name}}<br>{{item_user.last_name}}</h2></a>
-          </div>
-
-          <h2 style="margin-top: 20px;">price</h2>
-          <h2 class="price-discount">&#163;{{item.price}}</h2><br>
-
-          <h2 style="margin-top: 20px;">Details</h2>
-          <p class="description">{{item.details}}</p><br>
-          
-          <h2>Contacts</h2>
-          <p>{{item_user.phone}}</p>
-
-          {% if session.loged_user.id == item.user_id %}
-          <button class="button-28" role="button" id="edit-button">Edit</button>
-          <script>
-            document.getElementById("edit-button").addEventListener("click", function(){
-                window.location.href = "{{ url_for('EditItem', id=item.id) }}";
-            });
-          </script>
-          {%endif%}
-
-
-      </div>
-        </div>
-    
-</section>
-
-
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<section class="comments-section">
-    <div class="container">
-        <div class="comments-header">
-            <h2>Comments</h2>
-        </div>
-        {% if session.loged_user %}
-        <!-- New Comment Form -->
-        <form action="{{ url_for('Comment', id=item.id) }}" method="POST" class="new-comment-form">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <div class="comment-input-area">
-                <img class="user-avatar" src="{{ url_for('static', filename='uploads/profile_images/' + session.loged_user.img ) }}" alt="User Avatar">
-                <textarea class="comment-input" name="comment" placeholder="Write a comment..." required></textarea>
-            </div>
-            <button type="submit" class="submit-comment-btn">Submit</button>
-        </form>
-        {%endif%}
-
-        <!-- Comment List -->
-        <div class="comments-list">
-            <!-- COMMENT ITEM -->
-            {% if comments %}
-            {%for comment in comments%}
-            <div class="comment-item">
-                {% if session.loged_user.id == comment.user_id %}
-                <a href="{{url_for('MyProfile', id=users[loop.index0].id)}}"><img class="comment-avatar" src="{{ url_for('static', filename='uploads/profile_images/' + users[loop.index0].img) }}" alt="Avatar"></a>
-                {%else%}
-                <a href="{{url_for('Profile', id=users[loop.index0].id)}}"><img class="comment-avatar" src="{{ url_for('static', filename='uploads/profile_images/' + users[loop.index0].img) }}" alt="Avatar"></a>
-                {%endif%}
-
-                <div class="comment-body">
-                    <div class="title-comment" style="display: flex;  align-items: flex-start; justify-content: space-between;">
-                    <div>
-                    <a href="{{url_for('Profile', id=users[loop.index0].id) }}" style="color: black;"><h1 class="comment-author" style="font-size: 24px; max-width: 100%; display: inline-block;">{{users[loop.index0].first_name}} {{users[loop.index0].last_name}}</h1></a>
-                    </div>
-                    {% if session.loged_user.id == comment.user_id %}
-                    <div>
-                    <button class="button-28" role="button" id="delete-button" >Delete</button>
-                    <script>
-                      document.getElementById("delete-button").addEventListener("click", function(){
-                          window.location.href = "{{ url_for('DeleteComment', comment_id=comment.id , item_id=comment.item_id) }}";
-                      });
-                    </script>
-                    </div>
-                    {%endif%}
-                    </div>
-                    </div>
-                    <p class="comment-text" style="font-size: 18px;">{{comments[loop.index0].text}}</p>
-                    
-                    <div class="comment-footer">
-                        <span class="comment-date">{{comments[loop.index0].updated_at}}</span>
-                        <span class="comment-likes"><i class="fa fa-thumbs-up"></i> 13</span>
-                        <a href="#" class="comment-action">Like</a>
-                        <a href="#" class="comment-action">Reply</a>
-                    </div>
-                
-            </div>
-            {%endfor%}
+            {% if session.loged_user %}
+            <!-- New Comment Form -->
+            <form action="{{ url_for('Comment', id=item.id) }}" method="POST" class="new-comment-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="comment-input-area">
+                    <img class="user-avatar"
+                        src="{{ url_for('static', filename='uploads/profile_images/' + session.loged_user.img ) }}" alt="User Avatar">
+                    <textarea class="comment-input" name="comment" placeholder="Write a comment..." required></textarea>
+                </div>
+                <button type="submit" class="submit-comment-btn">Submit</button>
+            </form>
             {% endif %}
-        </div>
-        
-    </div>
-</section>
 
+            <!-- Comment List -->
+            <div class="comments-list">
+                {% if comments %}
+                {% for comment in comments %}
+                <div class="comment-item"> <!-- Individual comment item -->
+                    {% if session.loged_user.id == comment.user_id %}
+                    <a href="{{ url_for('MyProfile', id=users[loop.index0].id) }}">
+                        <img class="comment-avatar" src="{{ url_for('static', filename='uploads/profile_images/' + users[loop.index0].img) }}" alt="Avatar">
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('Profile', id=users[loop.index0].id) }}">
+                        <img class="comment-avatar" src="{{ url_for('static', filename='uploads/profile_images/' + users[loop.index0].img) }}" alt="Avatar">
+                    </a>
+                    {% endif %}
+
+                    <div class="comment-body">
+                        <div class="title-comment" style="display: flex; align-items: flex-start; justify-content: space-between;">
+                            <div>
+                                <a href="{{ url_for('Profile', id=users[loop.index0].id) }}" style="color: black;">
+                                    <h1 class="comment-author" style="font-size: 24px; max-width: 100%; display: inline-block;">
+                                        {{ users[loop.index0].first_name }} {{ users[loop.index0].last_name }}
+                                    </h1>
+                                </a>
+                            </div>
+
+                            {% if session.loged_user.id == comment.user_id %}
+                            <div>
+                                <button class="button-28" role="button" id="delete-button">Delete</button>
+                                <script>
+                                    document.getElementById("delete-button").addEventListener("click", function() {
+                                        window.location.href = "{{ url_for('DeleteComment', comment_id=comment.id , item_id=comment.item_id) }}";
+                                    });
+                                </script>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <p class="comment-text" style="font-size: 18px;">{{ comments[loop.index0].text }}</p>
+
+                        <div class="comment-footer">
+                            <span class="comment-date">{{ comments[loop.index0].updated_at }}</span>
+                            <span class="comment-likes"><i class="fa fa-thumbs-up"></i> 13</span>
+                            <a href="#" class="comment-action">Like</a>
+                            <a href="#" class="comment-action">Reply</a>
+                        </div>
+                    </div> <!-- Closing comment-body -->
+                </div> <!-- Closing comment-item -->
+                {% endfor %}
+                {% endif %}
+            </div> <!-- Closing comments-list -->
+        </div> <!-- Closing container -->
+    </section> <!-- Closing comments-section -->
+</div> <!-- Closing profile-container -->
 
 <script>
     // Main image
@@ -327,14 +328,10 @@ rightArrow.addEventListener("click", function () {
 .left-imgs {
     flex: 1;
     max-width: 60%; /* Reduce width of the large image section */
-    margin-right: 20px;
+    margin: auto;
+    align-items: center;
 }
 
-.left-imgs img {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
 .right-text {
     flex: 0.4;
@@ -467,14 +464,14 @@ rightArrow.addEventListener("click", function () {
 }
 
 .main-img {
-  height: 80%;
-  width: 85%;
-  border-radius: 10px;
-  cursor: pointer;
-
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 2rem;
+    width: 80%;           /* Set a fixed width for all images */
+    height: 80%;          /* Set a fixed height for all images */
+    border-radius: 10px;    /* Rounds the corners */
+    cursor: pointer;        /* Pointer cursor on hover */
+    display: block;         /* Block-level display */
+    margin: 10px;           /* Adds spacing around the image */
+    margin-bottom: 2rem;    /* Extra bottom margin */
+    object-fit: cover;      /* Ensures the image fills the area without distortion (cropped if necessary) */
 }
 
 .thumbnails {
@@ -604,29 +601,27 @@ rightArrow.addEventListener("click", function () {
   position: absolute;
   height: 4rem;
   width: 4rem;
-  /* top: 0;
-  left: 0; */
   background-color: hsl(0, 0%, 100%);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   border: none;
   cursor: pointer;
   border-radius: 50%;
-}
-
-.btn-swipe ion-icon {
-  height: 50%;
-  width: 50%;
 }
 
 .btn-swipe.btn-swipe-left {
   top: 40%;
   left: 10%;
   transform: translate(-50%, -50%);
+  background-image: url('left-arrow.png'); /* Add your left arrow image here */
 }
 
 .btn-swipe.btn-swipe-right {
   top: 40%;
   right: 10%;
   transform: translate(50%, -50%);
+  background-image: url('right-arrow.png'); /* Add your right arrow image here */
 }
 
 .btn-swipe:hover,

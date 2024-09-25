@@ -3,27 +3,179 @@
 {% block body %}
 
 <form action="/sell/submit" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
-    <h1>{{error_msg}}</h1>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+  <h1>{{error_msg}}</h1>
 
-    <label for="title">title:</label>
-    <input type="text" id="title" name="title" value="{{title}}" required>
+  <label for="title">Title</label>
+  <input type="text" id="title" name="title" value="{{title}}" placeholder="Enter item title" required>
 
-    <label for="category">Choose a car:</label>
-  <select name="category" id="category" required >
-    <option value="phones">phones</option>
-    <option value="watches">watches</option>
-    <option value="accessories">accessories</option>
+  <label for="category">Choose a category</label>
+  <select name="category" id="category" required>
+      <option value="phones">Phones</option>
+      <option value="watches">Watches</option>
+      <option value="accessories">Accessories</option>
   </select>
 
-    <label for="price">price:</label>
-    <input type="number" id="price" name="price" value="{{price}}" required><br>
+  <label for="price">Price</label>
+  <input type="number" id="price" name="price" value="{{price}}" placeholder="Enter price" required>
 
-    <label for="details">details:</label>
-    <textarea id="details" name="details" value="{{details}}" rows="6" cols="50" placeholder="Enter detailed description of the item..." required></textarea><br>
-    <label for="images">Upload Images:</label>
-    <input type="file" name="images" id="images" multiple><br>
+  <label for="details">Details</label>
+  <textarea id="details" name="details" rows="6" placeholder="Enter detailed description of the item..." required></textarea>
 
-    <input type="submit" value="Submit">
+  <label for="profile_image">Upload Profile Image:</label><br>
+
+  <label for="images" class="custom-file-upload">
+    Choose Images
+  </label>
+  <div hidden>
+  <input type="file" name="images" id="images" accept=".png, .jpg, .jpeg, .jfif, .heif" multiple hidden>
+  </div>
+  
+  <div id="imagePreviewContainer"></div>
+  <div id="fileName" class="file-name" hidden>No file chosen</div>
+
+  <input type="submit" value="Create Item" id="submitBtn" style="margin-top: 15;">
 </form>
+
+
+<script>
+  const fileInput = document.getElementById('images');
+  const imagePreviewContainer = document.getElementById('imagePreviewContainer'); // New container for multiple images
+  const fileNameElement = document.getElementById('fileName');
+
+  fileInput.addEventListener('change', function () {
+    const files = fileInput.files;
+    imagePreviewContainer.innerHTML = ''; // Clear previous previews
+
+    if (files.length > 0) {
+      fileNameElement.innerHTML = `${files.length} files selected`; // Show the number of files selected
+
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          // Create new image element for each file
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.classList.add('image-preview');
+          imagePreviewContainer.appendChild(img); // Add the new image to the container
+        };
+
+        reader.readAsDataURL(file);
+      });
+    } else {
+      fileNameElement.innerHTML = 'No file chosen'; // Reset the file name display if no file is selected
+    }
+  });
+</script>
+
+
+
+<style>
+  /* General Form Styling */
+form {
+    background-color: #fef7f5; /* Light peach background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Input Fields and Textarea */
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Labels */
+form label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Placeholder Styling */
+form input::placeholder,
+form textarea::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+/* File Input */
+form input[type="file"] {
+    margin-top: 10px;
+    display: block;
+}
+
+/* Submit Button */
+form input[type="submit"] {
+    background-color: #5ba79e; /* Matching button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #4a8b7d; /* Darker button color on hover */
+}
+
+.custom-file-upload {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: #6aa69c;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .custom-file-upload:hover {
+      background-color: #16a085;
+    }
+
+    .file-name {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Image preview styles */
+
+
+/* Image preview container styles */
+#imagePreviewContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.image-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #6aa69c;
+  margin-bottom: 15px;
+  margin-top: 0px;
+}
+
+
+</style>
 {% endblock body %}
