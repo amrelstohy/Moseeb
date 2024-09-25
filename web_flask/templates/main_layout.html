@@ -34,11 +34,28 @@
                   <button class="search-btn"><img src="{{ url_for('static', filename='icons/search.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></button>
                 </div>
                 <div class="user-actions">
-                  <i class="user-icon"><a href="{{ url_for('MyProfile') }}"><img src="{{ url_for('static', filename='icons/user.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></i>
-                  <i class="wishlist-icon"><a href="%"><img src="{{ url_for('static', filename='icons/star.png') }}" alt="Description of image" style="width: 20px; height: 20px;"></a></i>
-                  <button class="sell-btn" id="sell-button">Sell</button>
+  
+                  <!-- HTML !-->
+                  {% if session.loged_user%}
+                  <a href="{{ url_for('MyProfile', id=session.loged_user.id)}}"><img class="image-preview-profile" src="{{ url_for('static', filename='uploads/profile_images/' + session.loged_user.img ) }}" ></a>
+                  <a href="{{ url_for('MyProfile', id=session.loged_user.id)}}" style="color: black;"><p style="display: inline-block; margin-top: 7px; margin-left: 5px; margin-right: 10px;">{{session.loged_user.first_name}}<br>{{session.loged_user.last_name}}<p></a>
+                  <button class="button-68" id="logout_button" role="button" style="margin-left: 10px">Logout</button>
+                  {%else%}
+                  <button class="button-68" id="login_button" role="button">Login</button>
+                  {%endif%}
+                  <button class="button-68" id="sell-button" style="margin-left: 10px">Sell</button>
                   <script>
-                    document.getElementById("sell-button").addEventListener("click", function () {
+                      document.getElementById("login_button").addEventListener("click", function () {
+                      window.location.href = "{{ url_for('SignIn') }}";
+                    });
+                  </script>
+                  <script>
+                      document.getElementById("logout_button").addEventListener("click", function () {
+                      window.location.href = "{{ url_for('logout') }}";
+                    });
+                  </script>
+                  <script>
+                      document.getElementById("sell-button").addEventListener("click", function () {
                       window.location.href = "{{ url_for('Sell') }}";
                     });
                   </script>
@@ -49,6 +66,9 @@
           
     </header>
 
+      <!-- {%if session.loged_user%}
+      <h1>{{session.loged_user}} </h1>
+      {%endif%} -->
     <div class="container">
     {% block body %}{% endblock body %}
     </div>
