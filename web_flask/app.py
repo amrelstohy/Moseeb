@@ -7,7 +7,6 @@ from models.auth import Auth
 from werkzeug.utils import secure_filename
 import os
 import shutil
-import re
 
 
 
@@ -17,12 +16,21 @@ csrf = CSRFProtect(app)
 
 UPLOAD_FOLDER = 'web_flask/static/uploads/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'jfif', 'heif'}
+LOGED_USER = None
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['LOGED_USER'] = LOGED_USER
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
+@app.before_request
+def before_every_request():
+    if app.config['LOGED_USER']:
+        session['loged_user'] = app.config['LOGED_USER'].to_dict()
 
 
 
@@ -57,16 +65,18 @@ def SignInSubmit():
         password_error = 'Wrong password'
         return render_template('signin/form.html', email=email, password=password, password_error=password_error )
     else:
-        session['user_id'] = auth.get('user_id')
         session['superuser'] = auth.get('superuser')
         next_url = request.args.get('next')
-
+        session['user_id'] = auth.get('user_id')
+    app.config['LOGED_USER'] = storage.all('User').get(auth.get('user_id'))
     return redirect(next_url or url_for('home'))
 
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
     session.pop('superuser', None)
+    app.config['LOGED_USER'] = None
+    session['loged_user'] = None
     return redirect(url_for('home'))
 
 
@@ -148,6 +158,7 @@ def SignUpSubmit():
     storage.save()
     
     session['user_id'] = user_id
+    app.config['LOGED_USER'] = storage.all('User').get(user_id)
     return redirect(url_for('home'))
 
 
@@ -261,8 +272,10 @@ def SellSubmit():
 @app.route('/items/<string:id>')
 def Show(id):
     item = storage.all('Item').get(id)
+    if 'loged_user' not in session:
+        session['loged_user'] = None
     if item:
-        user = storage.all('User').get(item.user_id)
+        item_user = storage.all('User').get(item.user_id)
     else:
         return abort(404)
     if item:
@@ -274,9 +287,9 @@ def Show(id):
             if comment and user:
                 comments.append(comment)
                 users.append(user)
-        return render_template('show.html', item=item, user=user, comments=comments, users=users)
+        return render_template('show.html', item=item, users=users, comments=comments, item_user=item_user)
  
-@app.route('/items/<string:id>/comment')
+@app.route('/items/<string:id>/comment', methods=['POST'])
 def Comment(id):
     user_id = session.get('user_id')
     if not user_id:
@@ -362,12 +375,11 @@ def EditItemSubmit(id):
             else:
                 os.makedirs(path)
                 item.images = []
-            for idx in range(len(images)):
-                if images[idx].filename == '':
+            for image in images:
+                if image.filename == '':
                     continue
-                original_filename = secure_filename(images[idx].filename)
-                extension = re.search(r'\.([a-zA-Z0-9]+)$', original_filename)
-                images[idx].save(os.path.join(app.config['UPLOAD_FOLDER'], f'items_images/{item.id}/[{idx}]' + extension ))
+                original_filename = secure_filename(image.filename)
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], f'items_images/{item.id}/' + original_filename))
                 item.images.append(original_filename)
 
         item.title = title
@@ -408,6 +420,8 @@ def DeleteProfile():
 
 @app.route('/items')
 def Items():
+    user_id = session.get('user_id')
+    login_user = storage.all('User').get(user_id)
     category = request.args.get('category', 'all') 
     page = request.args.get('page', 1, type=int) 
     items_per_page = 2
@@ -438,6 +452,10 @@ def Items():
         has_next=has_next
     )
 
+@app.route('/user_id')
+def logedin_user():
+    x = 10
+    return "10"
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
