@@ -317,13 +317,31 @@ rightArrow.addEventListener("click", function () {
 }
 
 .container_1 {
-  /* background-color: red; */
     display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.left-imgs {
+    flex: 1;
+    max-width: 60%; /* Reduce width of the large image section */
+    margin-right: 20px;
+}
+
+.left-imgs img {
     width: 100%;
-    max-width: 100%;
-    padding: 15px;
-    box-sizing: border-box;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.right-text {
+    flex: 0.4;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .heading-secondary {
