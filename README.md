@@ -28,7 +28,7 @@ To install the project, follow these steps:
    flask run
 2. Then, open your browser and go to `http://127.0.0.1:5000`.
 
-![Alt text]([link_to_your_image](https://github.com/amrelstohy/Moseeb/blob/main/Screenshot%202024-09-27%20203934.png?raw=true))
-![Alt text]([link_to_your_image](https://github.com/amrelstohy/Moseeb/blob/main/Screenshot%202024-09-27%20203950.png?raw=true))
+![image1](https://github.com/amrelstohy/Moseeb/blob/main/Screenshot%202024-09-27%20203934.png?raw=true)
+![image2](https://github.com/amrelstohy/Moseeb/blob/main/Screenshot%202024-09-27%20203950.png?raw=true)
 
    
