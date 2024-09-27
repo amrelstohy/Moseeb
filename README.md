@@ -1,10 +1,10 @@
 # Moseeb
 
 ## Introduction
-Moseeb is a website that allows users to buy and sell phones, watches, and accessories with ease, connecting them directly with sellers. [Visit the site](link_to_your_deployed_site).
+Moseeb is a website that allows users to buy and sell phones, watches, and accessories with ease, connecting them directly with sellers.
 
 ## Deployed Site
-You can visit the live site [here](https://web-01.amrelstohy.tech/).
+You can visit the live site [here](https://web-01.amrelstohy.tech/landingpage).
 
 
 ## Author(s)
@@ -27,5 +27,8 @@ To install the project, follow these steps:
    ```bash
    flask run
 2. Then, open your browser and go to `http://127.0.0.1:5000`.
+
+![Alt text]([link_to_your_image](https://github.com/amrelstohy/Moseeb/blob/main/Screenshot%202024-09-27%20203934.png?raw=true))
+![Alt text]([link_to_your_image](https://github.com/amrelstohy/Moseeb/blob/main/Screenshot%202024-09-27%20203950.png?raw=true))
 
    
