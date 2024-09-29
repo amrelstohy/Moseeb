@@ -209,7 +209,8 @@
   }
 
   .product-img {
-    height: 200px;
+    height: 250px;
+    width: 300px;
     background-size: cover;
     background-position: center;
   }
