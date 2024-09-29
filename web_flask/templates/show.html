@@ -75,7 +75,7 @@
 
                 <!-- User section -->
                 <div style="display: flex; align-items: center; gap: 10px;">
-                    <img class="image-preview" src="{{ url_for('static', filename='uploads/profile_images/' + item_user.img ) }}" >
+                    <img class="image-preview" src="{{ url_for('static', filename='uploads/profile_images/' + (item_user.img if item_user.img else 'default.jpg')) }}" >
                     <a href="{{ url_for('Profile', id=item.user_id) }}" style="color: black;">
                         <h2 style="display: inline-block; margin-top: 7px;">{{ item_user.first_name }}<br>{{ item_user.last_name }}</h2>
                     </a>
@@ -116,7 +116,7 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="comment-input-area">
                     <img class="user-avatar"
-                        src="{{ url_for('static', filename='uploads/profile_images/' + session.loged_user.img ) }}" alt="User Avatar">
+                    src="{{ url_for('static', filename='uploads/profile_images/' + (session.loged_user.img if session.loged_user.img else 'default.jpg')) }}" alt="User Avatar">
                     <textarea class="comment-input" name="comment" placeholder="Write a comment..." required></textarea>
                 </div>
                 <button type="submit" class="submit-comment-btn">Submit</button>
@@ -129,12 +129,12 @@
                 {% for comment in comments %}
                 <div class="comment-item"> <!-- Individual comment item -->
                     {% if session.loged_user.id == comment.user_id %}
-                    <a href="{{ url_for('MyProfile', id=users[loop.index0].id) }}">
-                        <img class="comment-avatar" src="{{ url_for('static', filename='uploads/profile_images/' + users[loop.index0].img) }}" alt="Avatar">
+                    <a href="{{ url_for('Profile', id=users[loop.index0].id) }}">
+                        <img class="comment-avatar" src="{{ url_for('static', filename='uploads/profile_images/' + (users[loop.index0].img if users[loop.index0].img else 'default.jpg')) }}" alt="Avatar">
                     </a>
                     {% else %}
                     <a href="{{ url_for('Profile', id=users[loop.index0].id) }}">
-                        <img class="comment-avatar" src="{{ url_for('static', filename='uploads/profile_images/' + users[loop.index0].img) }}" alt="Avatar">
+                        <img class="comment-avatar" src="{{ url_for('static', filename='uploads/profile_images/' + (users[loop.index0].img if users[loop.index0].img else 'default.jpg')) }}" alt="Avatar">
                     </a>
                     {% endif %}
 

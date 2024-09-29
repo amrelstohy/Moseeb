@@ -6,12 +6,20 @@
 
   main {
     padding-bottom: 60px; 
+    flex-grow: 1;
+  }
+
+  html {
+    height: 100%;
   }
   
   body {
+    height: 100%;
     font-family: 'Arial', sans-serif;
     background-color:#fde1cb;
-    overflow-y: scroll
+    overflow-y: scroll;
+    display: flex; 
+    flex-direction: column;
   }
   
   .navbar {
@@ -168,6 +176,8 @@
     border-radius: 4px;
     cursor: pointer;
   }
+ 
+  
   
   .sell-btn:hover {
     background-color: #6aa69c;

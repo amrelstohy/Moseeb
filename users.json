@@ -1,0 +1,12 @@
+{
+    "amramr2901@gmail.com": {
+        "password": "$2b$12$2vQKqvJI70RGcVgmwVCLOuuE4cQh6sAhICfQ89MztqBpR0i5pzxhK",
+        "user_id": "227aea27-42b7-4cf1-9cca-e7aa8a4a50c7",
+        "superuser": true
+    },
+    "amramr290@gmail.com": {
+        "password": "$2b$12$CF9NFtTP2Wsd80Ubff75Ee5UQTe1gH0zhBpLUDKSmY5ygwbJHR4aG",
+        "user_id": "45e529e0-29af-4590-ae0a-1b3e762e3b7f",
+        "superuser": false
+    }
+}
