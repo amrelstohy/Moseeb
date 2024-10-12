@@ -37,6 +37,7 @@
    -->
                   <!-- HTML !-->
                   {% if session.loged_user%}
+                  {{session.loged_user}}
                   <a href="{{ url_for('MyProfile')}}"><img class="image-preview-profile" src="{{ url_for('static', filename='uploads/profile_images/' + (session.loged_user.img if session.loged_user.img else 'default.jpg')) }}"  ></a>
                   <a href="{{ url_for('MyProfile')}}" style="color: black;"><p style="display: inline-block; margin-top: 7px; margin-left: 5px; margin-right: 10px;">{{session.loged_user.first_name}}<br>{{session.loged_user.last_name}}<p></a>
                   <button class="button-68" id="logout_button" role="button" style="margin-left: 10px">Logout</button>

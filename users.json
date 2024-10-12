@@ -8,5 +8,15 @@
         "password": "$2b$12$CF9NFtTP2Wsd80Ubff75Ee5UQTe1gH0zhBpLUDKSmY5ygwbJHR4aG",
         "user_id": "45e529e0-29af-4590-ae0a-1b3e762e3b7f",
         "superuser": false
+    },
+    "ccc@gmail.com": {
+        "password": "$2b$12$bR6iex7.bgpvmMPVgYNcOeP698CeD5jfWjUMMo/gRYrLUbtpMPZk6",
+        "user_id": "6970cc3a-8e35-4798-9bfe-d9edc5befc39",
+        "superuser": false
+    },
+    "aa123@gmail.com": {
+        "password": "$2b$12$nReF2q8K/jnCtc8YW98LlOiHCdHU4iqFGQd8syCliTOEWpeWxX55y",
+        "user_id": "93b44f94-14c1-499d-b325-6dd374cfeec9",
+        "superuser": false
     }
 }

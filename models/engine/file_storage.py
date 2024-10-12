@@ -137,8 +137,11 @@ class FileStorage():
                 cls.all('Item').pop(item_id, None)
             
             path = f'web_flask/static/uploads/profile_images/{user.img}'
+            print(path)
+            print(os.path.exists(path))
             if os.path.exists(path):
-                os.remove(f'web_flask/static/uploads/profile_images/{user.img}')
+                if user.img:
+                    os.remove(f'web_flask/static/uploads/profile_images/{user.img}')
 
             cls.all('User').pop(id, None)
 
@@ -161,6 +164,7 @@ class FileStorage():
                 return
             cls.all('Comment').pop(id, None)
 
+        cls.save()
 
 
 

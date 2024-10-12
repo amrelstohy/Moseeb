@@ -30,6 +30,7 @@ def allowed_file(filename):
 @app.before_request
 def before_every_request():
     if app.config['LOGED_USER']:
+        print('hi')
         session['loged_user'] = app.config['LOGED_USER'].to_dict()
 
 
@@ -114,9 +115,14 @@ def DeleteUser(id):
 
     if superuser:
         storage.delete(id, 'User')
+        session.pop('user_id', None)
+        session.pop('superuser', None)
+        app.config['LOGED_USER'] = None
+        session['loged_user'] = None
         return redirect(url_for('home'))
     else:
         abort(404)
+    
 
 @app.route('/signup')
 def SignUp():

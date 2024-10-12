@@ -1,36 +1,17 @@
 {
     "users": {
-        "227aea27-42b7-4cf1-9cca-e7aa8a4a50c7": {
-            "id": "227aea27-42b7-4cf1-9cca-e7aa8a4a50c7",
-            "created_at": "2024-09-29 14:57:58",
-            "updated_at": "2024-09-29 15:16:38",
-            "first_name": "Amr",
-            "last_name": "Elstohy",
-            "email": "amramr2901@gmail.com",
-            "phone": "0",
+        "93b44f94-14c1-499d-b325-6dd374cfeec9": {
+            "id": "93b44f94-14c1-499d-b325-6dd374cfeec9",
+            "created_at": "2024-10-12 18:43:49",
+            "updated_at": "2024-10-12 18:43:49",
+            "first_name": "mohmed",
+            "last_name": "elweza",
+            "email": "aa123@gmail.com",
+            "phone": "1234567890",
             "favourites": [],
             "comments": [],
-            "items": [],
-            "birthday": "",
-            "gender": null,
-            "img": "227aea27-42b7-4cf1-9cca-e7aa8a4a50c7.jpg",
-            "__class__": "User"
-        },
-        "45e529e0-29af-4590-ae0a-1b3e762e3b7f": {
-            "id": "45e529e0-29af-4590-ae0a-1b3e762e3b7f",
-            "created_at": "2024-09-29 15:29:18",
-            "updated_at": "2024-09-29 15:29:18",
-            "first_name": "Amr",
-            "last_name": "Elstohy",
-            "email": "amramr290@gmail.com",
-            "phone": "amramr290@gmail.com",
-            "favourites": [],
-            "comments": [
-                "01df20ee-9f99-4646-8619-5f197ea5bc52"
-            ],
             "items": [
-                "c89b9e25-e713-4685-9709-b8b4aa087e3d",
-                "bc342028-e2a5-42cb-a99b-3c813d008d5b"
+                "4311ee6a-c7a2-470a-a788-6ca0ed40f392"
             ],
             "birthday": "",
             "gender": null,
@@ -39,35 +20,14 @@
         }
     },
     "items": {
-        "c89b9e25-e713-4685-9709-b8b4aa087e3d": {
-            "id": "c89b9e25-e713-4685-9709-b8b4aa087e3d",
-            "created_at": "2024-09-29 15:33:05",
-            "updated_at": "2024-09-29 15:33:05",
-            "user_id": "45e529e0-29af-4590-ae0a-1b3e762e3b7f",
-            "title": "iphone 16 pro max",
-            "details": "Display\r\n\r\n6.9\u2011inch Super Retina XDR display\r\n\r\nProcessor\r\n\r\nA18 Pro chip\r\n\r\nDurable Design\r\n\r\nLatest-generation Ceramic Shield front Textured matte glass back\r\n\r\nApple Intelligence\r\n\r\napple Intelligence is the personal intelligence system\r\n\r\nFront Camera\r\n\r\n12MP\r\n\r\nMain Camera\r\n\r\n48MP Fusion: 24 mm, \u0192/1.78 aperture, second\u2011generation sensor\u2011shift optical image stabilization\r\n\r\nCamera Control\r\n\r\nExposure, Depth, Zoom, Cameras, Styles, Tone\r\n\r\nAction button\r\n\r\nSilent mode, Focus, Camera, Flashlight, Voice Memo, Recognize Music, Translate, Magnifier, Controls, Shortcut, or Accessibility\r\n\r\nBattery\r\n\r\nVideo playback Up to 33 hours\r\n\r\nOperating System\r\n\r\niOS 18",
-            "price": "100000",
-            "category": "phones",
-            "images": [
-                "6fddc1f2d539f3bb40e83d403ec66b6e8f9bafdaaf9e82fb20b2e05be5158ca2.jpeg",
-                "05126c249eab4838bc587862b2ee8cd76d9337b959be10ecddca9360e19ff321.jpeg",
-                "0a953c4f6a4904e3133147872c05c4af2a63dffbe4ecd3ea91d66126d2360b1f.jpeg"
-            ],
-            "comments": [
-                "01df20ee-9f99-4646-8619-5f197ea5bc52"
-            ],
-            "location_lang": 0.0,
-            "location_lat": 0.0,
-            "__class__": "Item"
-        },
-        "bc342028-e2a5-42cb-a99b-3c813d008d5b": {
-            "id": "bc342028-e2a5-42cb-a99b-3c813d008d5b",
-            "created_at": "2024-09-29 18:43:14",
-            "updated_at": "2024-09-29 18:43:14",
-            "user_id": "45e529e0-29af-4590-ae0a-1b3e762e3b7f",
-            "title": "Apple iPhone 16, 128GB, 5G - Ultramarine",
-            "details": "Brand\r\nApple\r\n\r\nModel\r\niPhone 16\r\n\r\nDesign\r\n- Aluminum design\r\n\r\n- Latest-generation Ceramic Shield front\r\n\r\n- Color-infused glass back\r\n\r\nDisplay\r\n- 6.1 Inches\r\n\r\n- Super Retina XDR OLED, HDR10, Dolby Vision, 1000 nits (typ), 2000 nits (HBM)\r\n\r\n- (1179 x 2556)\r\n\r\nChipset\r\n- Apple A18 (3 nm)\r\n\r\n- 6\u2011core CPU with 2 performance and 4 efficiency cores\r\n\r\n- 5\u2011core GPU\r\n\r\n- 16\u2011core Neural Engine\r\n\r\nStorage Capacity\r\n128GB\r\n\r\nRear Camera\r\n- Dual Camera\r\n\r\n- 48 MP, f/1.6, 26mm (wide), 1/1.56\", 1.0\u00b5m, dual pixel PDAF, sensor-shift OIS\r\n\r\n- 12 MP, f/2.2, 13mm, 120\u02da (ultrawide), 0.7\u00b5m, dual pixel PDAF\r\n\r\n- Features Dual-LED dual-tone flash, HDR (photo/panorama)\r\n\r\n- Video 4K@24/25/30/60fps, 1080p@25/30/60/120/240fps, HDR, Dolby Vision HDR (up to 60fps), stereo sound rec.\r\n\r\nFront Camera\r\n- 12 MP, f/1.9, 23mm (wide), 1/3.6\", PDAF\r\n\r\n- SL 3D, (depth/biometrics sensor)\r\n\r\n- Features HDR, Dolby Vision HDR, 3D (spatial) audio, stereo sound rec.\r\n\r\n- Video 4K@24/25/30/60fps, 1080p@25/30/60/120fps, gyro-EIS\r\n\r\nBattery Capacity\r\n- 50% in 30 min\r\n\r\n- 25W wireless (MagSafe)\r\n\r\n- 15W wireless (Qi2)\r\n\r\n- Video playback: Up to 22 hours\r\n\r\n- Video playback (streamed): Up to 18 hours\r\n\r\n- Audio playback: Up to 80 hours\r\n\r\nNumber of SIM Cards\r\nSingle SIM\r\n\r\nConnectivity\r\n- Wi-Fi 802.11 a/b/g/n/ac/6/7, dual-band, hotspot\r\n\r\n- Bluetooth 5.3, A2DP, LE\r\n\r\n- Positioning GPS, GLONASS, GALILEO, BDS, QZSS\r\n\r\n- USB Type-C 2.0, DisplayPort\r\n\r\nColor\r\nUltramarine\r\n\r\nOther Features\r\n- Stereo speakers\r\n\r\n- IP68 dust/water resistant (up to 6m for 30 min)\r\n\r\nSensors\r\n- Face ID, accelerometer, gyro, proximity, compass, barometer\r\n\r\n- Ultra Wideband (UWB) support (gen2 chip)\r\n\r\n- Emergency SOS, Messages and Find My via satellite",
-            "price": "33999",
+        "4311ee6a-c7a2-470a-a788-6ca0ed40f392": {
+            "id": "4311ee6a-c7a2-470a-a788-6ca0ed40f392",
+            "created_at": "2024-10-12 18:44:19",
+            "updated_at": "2024-10-12 18:44:19",
+            "user_id": "93b44f94-14c1-499d-b325-6dd374cfeec9",
+            "title": "qwer",
+            "details": "wertyuio",
+            "price": "1234",
             "category": "phones",
             "images": [
                 "622c7e7e83fd96ef87b67d17e597c6a099cb39a76e11aa4973e42dc9a9b68902.jpeg",
@@ -80,15 +40,5 @@
             "__class__": "Item"
         }
     },
-    "comments": {
-        "01df20ee-9f99-4646-8619-5f197ea5bc52": {
-            "id": "01df20ee-9f99-4646-8619-5f197ea5bc52",
-            "created_at": "2024-09-29 15:41:54",
-            "updated_at": "2024-09-29 15:41:54",
-            "user_id": "45e529e0-29af-4590-ae0a-1b3e762e3b7f",
-            "item_id": "c89b9e25-e713-4685-9709-b8b4aa087e3d",
-            "text": "nice",
-            "__class__": "Comment"
-        }
-    }
+    "comments": {}
 }

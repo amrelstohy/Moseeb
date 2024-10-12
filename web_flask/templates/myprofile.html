@@ -2,6 +2,111 @@
 {% block title %}Moseeb{% endblock title %}
 {% block body %}
 
+<section class="main">
+    <div class="profile-card">
+      <div class="image">
+        <img src="{{ url_for('static', filename='uploads/profile_images/' + (session.loged_user.img if session.loged_user.img else 'default.jpg')) }}" alt="" class="profile-pic">
+      </div>
+      <div class="data">
+        <h2>{{user.first_name}} {{user.last_name}}</h2>
+        <span>Developer & Designer</span>
+      </div>
+      <div class="row">
+
+      </div>
+      <div class="buttons">
+        <a href="{{url_for('UpdateProfile')}}" class="btn">Edit</a>
+        <a href="{{url_for('DeleteProfile')}}" class="btn">Delete</a>
+      </div>
+        
+    </div>
+  </section>
+
+<style>
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.main{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(images/back.jpg);
+  background-position: center;
+  background-size: cover;
+}
+.profile-card{
+  background-color: #fff6f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  width: 100%;
+  border-radius: 25px;
+  padding: 30px;
+  border: 1px solid #ffffff40;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+.image{
+  position: relative;
+  height: 150px;
+  width: 150px;
+}
+.image .profile-pic{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+.data{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+.data h2{
+  font-size: 33px;
+  font-weight: 600;
+}
+span{
+  font-size: 18px;
+}
+.row{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.row .info{
+  text-align: center;
+  padding: 0 20px;
+}
+.buttons{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.buttons .btn{
+  color: #fff;
+  text-decoration: none;
+  margin: 0 20px;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-size: 18px;
+  white-space: nowrap;
+  background: linear-gradient(to left, #33ccff 0%, #ff99cc 100%);
+}
+.buttons .btn:hover{
+  box-shadow: inset 0 5px 20px rgba(0,0,0,0.4);
+}
+
+</style>
+
 <h1>{{reset_msg}}</h1>
 <h1>{{user}}</h1>
 <h2>{{items}}</h2>
